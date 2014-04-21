@@ -1,0 +1,22 @@
+Power ups
+
+Attack:
+ - frozen: congela durante un tiempo la pantalla
+ - basura: random bloques, de 3 a 7 bloques en columnas distintas
+ - thief: roba puntos al otro
+ - upside-down: da vuelta el espacio de juego (las fichas caen para arriba)
+ - invertir rotación: invierte el sentido de rotación de las piezas
+ - invertir controles: los controles responden de otra manera: por ejemplo, para abajo rota la pieza
+ - eliminar columna
+ - slow motion: la pieza baja super lento
+ - cover: pone algo con poca transparencia que tapa el espcacio de juego
+ - shrink: achica mucho el espacio de juego
+ - liar: miente acerca de la siguiente pieza
+ - lifter: levanta el piso de abajo
+
+
+Defense:
+ - anti-frozen: descongela antes del tiempo
+ - eliminar filas
+ - blocker: bloquea automáticamente el siguiente ataque
+ - anti-lifter: baja el piso automáticamente
