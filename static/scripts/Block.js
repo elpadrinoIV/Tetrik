@@ -1,4 +1,4 @@
-Blocks = Class.extend({
+Block = Class.extend({
     blockSize: {
         w: 25,
         h: 25
@@ -25,12 +25,13 @@ Blocks = Class.extend({
 
     rotate: function(direction) {},
 
-    draw: function(context) {
+    draw: function() {
+        console.log("Dibujando");
         for (var rowNumber = 0; rowNumber < this.shape.length; rowNumber++) {
             var row = this.shape[rowNumber];
             for (var colNumber = 0; colNumber < row.length; colNumber++) {
                 if (row[colNumber] !== 0) {
-                    context.drawImage(this.blockImg,
+                    gRenderEngine.context.drawImage(this.blockImg,
                                       this.pos.x + colNumber*this.blockSize.w,
                                       this.pos.y + rowNumber*this.blockSize.h,
                                       this.blockSize.w,
@@ -42,7 +43,7 @@ Blocks = Class.extend({
     }
 });
 
-IShape = Blocks.extend({
+IShape = Block.extend({
     blockImg: null,
 
     shape: [ [ 1, 0, 0, 0],
@@ -61,7 +62,7 @@ IShape = Blocks.extend({
 
 });
 
-JShape = Blocks.extend({
+JShape = Block.extend({
     blockImg: null,
 
     shape: [ [ 1, 0, 0],
@@ -78,7 +79,7 @@ JShape = Blocks.extend({
     },
 });
 
-LShape = Blocks.extend({
+LShape = Block.extend({
     blockImg: null,
 
     shape: [ [ 0, 0, 1],
@@ -95,7 +96,7 @@ LShape = Blocks.extend({
     },
 });
 
-OShape = Blocks.extend({
+OShape = Block.extend({
     blockImg: null,
 
     shape: [ [ 1, 1],
@@ -111,7 +112,7 @@ OShape = Blocks.extend({
     },
 });
 
-SShape = Blocks.extend({
+SShape = Block.extend({
     blockImg: null,
 
     shape: [ [ 0, 1, 1],
@@ -128,7 +129,7 @@ SShape = Blocks.extend({
     },
 });
 
-TShape = Blocks.extend({
+TShape = Block.extend({
     blockImg: null,
 
     shape: [ [ 1, 1, 1],
@@ -145,7 +146,7 @@ TShape = Blocks.extend({
     },
 });
 
-ZShape = Blocks.extend({
+ZShape = Block.extend({
     blockImg: null,
 
     shape: [ [ 1, 1, 0],
@@ -161,3 +162,11 @@ ZShape = Blocks.extend({
     rotate: function(direction) {
     },
 });
+
+gGameEngine.factory['IShape'] = IShape;
+gGameEngine.factory['JShape'] = JShape;
+gGameEngine.factory['LShape'] = LShape;
+gGameEngine.factory['OShape'] = OShape;
+gGameEngine.factory['SShape'] = SShape;
+gGameEngine.factory['TShape'] = TShape;
+gGameEngine.factory['ZShape'] = ZShape;

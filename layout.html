@@ -3,13 +3,19 @@
 <html>
     <head>
         <script src="static/scripts/core.js"></script>
-        <script src="static/scripts/blocks.js"></script>
+        <script src="static/scripts/RenderEngine.js"></script>
+        <script src="static/scripts/GameEngine.js"></script>
+        <script src="static/scripts/SpriteSheet.js"></script>
+        <script src="static/scripts/Block.js"></script>
     </head>
     <body id="body">
-        <!--
-        <canvas id="myCanvas" width="550" height="550" style="border:1px solid #000000;"></canvas>
-        -->
+        <canvas id="canvas"></canvas>
     <script>
+        gRenderEngine.setup();
+        var p = gGameEngine.spawnEntity('IShape');
+        p.pos = {x: 100, y: 200};
+        p.draw();
+        /*
             var block = new Image();
             var mult = 25;
             var body = document.getElementById("body");
@@ -50,6 +56,7 @@
 
             context.rect(14*mult, 12*mult, 7*mult, 9*mult);
             context.stroke();
+            */
         </script>
     </body>
 </html>
