@@ -31,11 +31,18 @@ Block = Class.extend({
             var row = this.shape[rowNumber];
             for (var colNumber = 0; colNumber < row.length; colNumber++) {
                 if (row[colNumber] !== 0) {
+                    /*
                     gRenderEngine.context.drawImage(this.blockImg,
                                       this.pos.x + colNumber*this.blockSize.w,
                                       this.pos.y + rowNumber*this.blockSize.h,
                                       this.blockSize.w,
                                       this.blockSize.h);
+                                      */
+                    drawSprite(this.blockImg,
+                               this.pos.x + colNumber*this.blockSize.w,
+                               this.pos.y + rowNumber*this.blockSize.h,
+                               this.blockSize.w,
+                               this.blockSize.h);
 
                 }
             }
@@ -44,7 +51,7 @@ Block = Class.extend({
 });
 
 IShape = Block.extend({
-    blockImg: null,
+    blockImg: "c7.png",
 
     shape: [ [ 1, 0, 0, 0],
              [ 1, 0, 0, 0],
@@ -63,7 +70,7 @@ IShape = Block.extend({
 });
 
 JShape = Block.extend({
-    blockImg: null,
+    blockImg: "c6.png",
 
     shape: [ [ 1, 0, 0],
              [ 1, 1, 1],
@@ -80,7 +87,7 @@ JShape = Block.extend({
 });
 
 LShape = Block.extend({
-    blockImg: null,
+    blockImg: "c3.png",
 
     shape: [ [ 0, 0, 1],
              [ 1, 1, 1],
@@ -97,7 +104,7 @@ LShape = Block.extend({
 });
 
 OShape = Block.extend({
-    blockImg: null,
+    blockImg: "c1.png",
 
     shape: [ [ 1, 1],
              [ 1, 1]],
@@ -113,7 +120,7 @@ OShape = Block.extend({
 });
 
 SShape = Block.extend({
-    blockImg: null,
+    blockImg: "c5.png",
 
     shape: [ [ 0, 1, 1],
              [ 1, 1, 0],
@@ -130,7 +137,7 @@ SShape = Block.extend({
 });
 
 TShape = Block.extend({
-    blockImg: null,
+    blockImg: "c4.png",
 
     shape: [ [ 1, 1, 1],
              [ 0, 1, 0],
@@ -147,7 +154,7 @@ TShape = Block.extend({
 });
 
 ZShape = Block.extend({
-    blockImg: null,
+    blockImg: "c2.png",
 
     shape: [ [ 1, 1, 0],
              [ 0, 1, 1],

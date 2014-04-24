@@ -3,6 +3,8 @@
 <html>
     <head>
         <script src="static/scripts/core.js"></script>
+        <script src="static/scripts/utils.js"></script>
+        <script src="static/scripts/xhr.js"></script>
         <script src="static/scripts/RenderEngine.js"></script>
         <script src="static/scripts/GameEngine.js"></script>
         <script src="static/scripts/SpriteSheet.js"></script>
@@ -12,11 +14,42 @@
         <canvas id="canvas"></canvas>
     <script>
         gRenderEngine.setup();
-        var p = gGameEngine.spawnEntity('IShape');
-        p.pos = {x: 100, y: 200};
-        p.draw();
+        gGameEngine.setup();
+        
+ //       setTimeout(function() {
+            console.log(gGameEngine.preloadComplete);
+            checkWait(function() { return gGameEngine.preloadComplete;}, function() {
+            var p = gGameEngine.spawnEntity('IShape');
+            p.pos = {x: 50, y: 425};
+            p.draw();
+
+            p = gGameEngine.spawnEntity('JShape');
+            p.pos = {x: 75, y: 475};
+            p.draw();
+
+            p = gGameEngine.spawnEntity('LShape');
+            p.pos = {x: 150, y: 475};
+            p.draw();
+
+            p = gGameEngine.spawnEntity('OShape');
+            p.pos = {x: 225, y: 475};
+            p.draw();
+
+            p = gGameEngine.spawnEntity('ZShape');
+            p.pos = {x: 75, y: 450};
+            p.draw();
+
+            p = gGameEngine.spawnEntity('SShape');
+            p.pos = {x: 150, y: 450};
+            p.draw();
+            
+            p = gGameEngine.spawnEntity('TShape');
+            p.pos = {x: 50, y: 400};
+            p.draw();
+        });
+   //     }, 2000);
+        
         /*
-            var block = new Image();
             var mult = 25;
             var body = document.getElementById("body");
             var canvas = document.createElement("canvas");
@@ -24,38 +57,41 @@
             canvas.height = 22*mult;
             canvas.style = "border:1px solid #000000;";
             body.appendChild(canvas);
-            var context = canvas.getContext('2d');
+            */
+            // var gRenderEngine.context = canvas.getContext('2d');
             
+            /*
             block.onload = function() {
                 console.log("Cargado");
                 i = new TShape();
                 i.pos = {x: 3*mult, y: 10*mult};
                 i.blockImg = block;
-                i.draw(context);
+                i.draw(gRenderEngine.context);
 
             }
             block.src = 'block.png';
+*/
+/*
+            gRenderEngine.context.beginPath();
+            gRenderEngine.context.lineWidth = 0.5;
+            gRenderEngine.context.strokeStyle = 'black';
+            gRenderEngine.context.rect(2*mult, 1*mult, 10*mult, 20*mult);
+            gRenderEngine.context.stroke();
 
-            context.beginPath();
-            context.lineWidth = 1;
-            context.strokeStyle = 'grey';
-            context.rect(2*mult, 1*mult, 10*mult, 20*mult);
-            context.stroke();
+            gRenderEngine.context.rect(1*mult, 1*mult, 0.25*mult, 20*mult);
+            gRenderEngine.context.stroke();
 
-            context.rect(1*mult, 1*mult, 0.25*mult, 20*mult);
-            context.stroke();
+            gRenderEngine.context.rect((13-0.25)*mult, 1*mult, 0.25*mult, 20*mult);
+            gRenderEngine.context.stroke();
 
-            context.rect((13-0.25)*mult, 1*mult, 0.25*mult, 20*mult);
-            context.stroke();
+            gRenderEngine.context.rect(14*mult, 2*mult, 7*mult, 4*mult);
+            gRenderEngine.context.stroke();
 
-            context.rect(14*mult, 2*mult, 7*mult, 4*mult);
-            context.stroke();
+            gRenderEngine.context.rect(14*mult, 8*mult, 7*mult, 2*mult);
+            gRenderEngine.context.stroke();
 
-            context.rect(14*mult, 8*mult, 7*mult, 2*mult);
-            context.stroke();
-
-            context.rect(14*mult, 12*mult, 7*mult, 9*mult);
-            context.stroke();
+            gRenderEngine.context.rect(14*mult, 12*mult, 7*mult, 9*mult);
+            gRenderEngine.context.stroke();
             */
         </script>
     </body>

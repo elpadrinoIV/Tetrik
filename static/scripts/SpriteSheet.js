@@ -4,8 +4,19 @@
 // gSpriteSheets['blocksAtlas.png'] devuelve el objeto 
 // SpriteSheetClass asociado.
 var gSpriteSheets = {};
+ImageCache = {};
 
-SpriteSheetClass = Class.extend({
+loadAtlasImage = function(imagename) {
+    if (ImageCache[imagename] != null)
+        return ImageCache[imagename];
+
+    var img = new Image();
+    img.src = imagename;
+    ImageCache[imagename] = img;
+    return img;
+};
+
+SpriteSheet = Class.extend({
     img: null,
     url: "",
     sprites: new Array(),
@@ -13,6 +24,7 @@ SpriteSheetClass = Class.extend({
     init: function() {},
 
     load: function(imgName) {
+        console.log("load spritesheet: " + imgName);
         this.url = imgName;
 
         var img = new Image();
@@ -87,7 +99,7 @@ function drawSprite(spriteName, posX, posY, width, height) {
 }
 
 function __drawSpriteInternal(sprite, sheet, posX, posY, width, height) {
-    if (spt === null || sheet === null) {
+    if (sprite === null || sheet === null) {
         return;
     }
 
@@ -96,7 +108,7 @@ function __drawSpriteInternal(sprite, sheet, posX, posY, width, height) {
         height = sprite.h;
     }
 
-    context.drawImage(sheet.img,
+    gRenderEngine.context.drawImage(sheet.img,
                       sprite.x, sprite.y, sprite.w, sprite.h,
                       posX, posY, width, height);
 }
