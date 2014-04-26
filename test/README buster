@@ -1,0 +1,31 @@
+Para poder ejecutar las pruebas es necesario tener node.js (http://nodejs.org/) y buster (busterjs.org) instalado.
+
+En particular, yo lo instalé de la siguiente manera  (y me gustó esta instalación):
+
+* nodejs
+1. Descargar nodejs. Yo me bajé la versión v0.10.26
+2. Descomprimr el tar.gz:
+    tar xzf node-<version>.tar.gz
+3. Crear directorio donde instalar nodejs. En particular no lo quise poner en el default bin, sino
+   que lo puse en un lugar aparte para que no necesite permisos de superusuario (en la doc dice que 
+   suele traer problemas).
+   
+   sudo mkdir /opt/node
+   sudo chown <usuario>:<usuario> /opt/node
+4. Configurar, compilar e instalar
+   ./configure --prefix /opt/node
+   make (se puede especificar -j 3 para compilar con 4 núcleos)
+   make install
+5. Editar ~/.bashrc para que puede encontrar el ejecutable:
+   Al final del archivo:
+   PATH=$PATH:/opt/node/bin
+6. En caso de querer usarlo inmediatamente en una terminal ya abierta, hay que hacer:
+   source ~/.bashrc
+
+* buster:
+1. npm install -g buster
+2. Una opción es instalar buster en forma local. La otra es en forma global (con -g en el paso 1).
+   En el caso de instalar en forma global, en el raiz del proyecto hay que hacer un link a buster:
+   npm link buster
+
+
