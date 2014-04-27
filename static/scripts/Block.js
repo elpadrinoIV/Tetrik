@@ -9,6 +9,10 @@ Block = Class.extend({
         y: 0
     },
 
+    rotations: null,
+
+    currentPosition: 0,
+
     shape: null,
 
     boundingBox: {
@@ -16,6 +20,10 @@ Block = Class.extend({
         right: 0,
         top: 0,
         bottom: 0
+    },
+
+    init: function() {
+        this.currentPosition = 0;
     },
 
     setPos: function(x, y) {
@@ -31,13 +39,6 @@ Block = Class.extend({
             var row = this.shape[rowNumber];
             for (var colNumber = 0; colNumber < row.length; colNumber++) {
                 if (row[colNumber] !== 0) {
-                    /*
-                    gRenderEngine.context.drawImage(this.blockImg,
-                                      this.pos.x + colNumber*this.blockSize.w,
-                                      this.pos.y + rowNumber*this.blockSize.h,
-                                      this.blockSize.w,
-                                      this.blockSize.h);
-                                      */
                     drawSprite(this.blockImg,
                                this.pos.x + colNumber*this.blockSize.w,
                                this.pos.y + rowNumber*this.blockSize.h,
@@ -53,17 +54,30 @@ Block = Class.extend({
 IShape = Block.extend({
     blockImg: "c7.png",
 
-    shape: [ [ 1, 0, 0, 0],
-             [ 1, 0, 0, 0],
-             [ 1, 0, 0, 0],
-             [ 1, 0, 0, 0]],
+    rotations: [
+                [ [0, 1, 0, 0],
+                  [0, 1, 0, 0],
+                  [0, 1, 0, 0],
+                  [0, 1, 0, 0]],
+
+                [ [0, 0, 0, 0],
+                  [1, 1, 1, 1],
+                  [0, 0, 0, 0],
+                  [0, 0, 0, 0]]
+    ],
 
     boundingBox: {
-        left: 0*this.blockSize,
-        right: 1*this.blockSize,
+        left: 1,
+        right: 2,
         top: 0,
-        bottom: 4*this.blockSize
+        bottom: 4,
     },
+
+    init: function() {
+        this.parent();
+        this.shape = this.rotations[this.currentPosition];
+    },
+
     rotate: function(direction) {
     },
 
@@ -72,16 +86,36 @@ IShape = Block.extend({
 JShape = Block.extend({
     blockImg: "c6.png",
 
-    shape: [ [ 1, 0, 0],
-             [ 1, 1, 1],
-             [ 0, 0, 0]],
+    rotations: [
+                [ [1, 1, 1],
+                  [0, 0, 1],
+                  [0, 0, 0] ],
+
+                [ [1, 1, 0],
+                  [1, 0, 0],
+                  [1, 0, 0] ],
+
+                [ [1, 0, 0],
+                  [1, 1, 1],
+                  [0, 0, 0] ],
+
+                [ [0, 1, 0],
+                  [0, 1, 0],
+                  [1, 1, 0] ]
+    ],
 
     boundingBox: {
-        left: 0*this.blockSize,
-        right: 3*this.blockSize,
+        left: 0,
+        right: 3,
         top: 0,
-        bottom: 2*this.blockSize
+        bottom: 2,
     },
+
+    init: function() {
+        this.parent();
+        this.shape = this.rotations[this.currentPosition];
+    },
+
     rotate: function(direction) {
     },
 });
@@ -89,16 +123,36 @@ JShape = Block.extend({
 LShape = Block.extend({
     blockImg: "c3.png",
 
-    shape: [ [ 0, 0, 1],
-             [ 1, 1, 1],
-             [ 0, 0, 0]],
+    rotations: [
+                [ [1, 1, 1],
+                  [1, 0, 0],
+                  [0, 0, 0] ],
+
+                [ [1, 0, 0],
+                  [1, 0, 0],
+                  [1, 1, 0] ],
+
+                [ [0, 0, 1],
+                  [1, 1, 1],
+                  [0, 0, 0] ],
+
+                [ [1, 1, 0],
+                  [0, 1, 0],
+                  [0, 1, 0] ]
+    ],
 
     boundingBox: {
-        left: 0*this.blockSize,
-        right: 3*this.blockSize,
+        left: 0,
+        right: 3,
         top: 0,
-        bottom: 2*this.blockSize
+        bottom: 2
     },
+
+    init: function() {
+        this.parent();
+        this.shape = this.rotations[this.currentPosition];
+    },
+
     rotate: function(direction) {
     },
 });
@@ -106,15 +160,23 @@ LShape = Block.extend({
 OShape = Block.extend({
     blockImg: "c1.png",
 
-    shape: [ [ 1, 1],
-             [ 1, 1]],
+    rotations: [
+                [ [1, 1],
+                  [1, 1] ]
+    ],
 
     boundingBox: {
-        left: 0*this.blockSize,
-        right: 2*this.blockSize,
+        left: 0,
+        right: 2,
         top: 0,
-        bottom: 2*this.blockSize
+        bottom: 2
     },
+
+    init: function() {
+        this.parent();
+        this.shape = this.rotations[this.currentPosition];
+    },
+
     rotate: function(direction) {
     },
 });
@@ -122,16 +184,28 @@ OShape = Block.extend({
 SShape = Block.extend({
     blockImg: "c5.png",
 
-    shape: [ [ 0, 1, 1],
-             [ 1, 1, 0],
-             [ 0, 0, 0]],
+    rotations: [
+                [ [0, 1, 1],
+                  [1, 1, 0],
+                  [0, 0, 0] ],
+
+                [ [1, 0, 0],
+                  [1, 1, 0],
+                  [0, 1, 0] ]
+    ],
 
     boundingBox: {
-        left: 0*this.blockSize,
-        right: 3*this.blockSize,
+        left: 0,
+        right: 3,
         top: 0,
-        bottom: 2*this.blockSize
+        bottom: 2
     },
+
+    init: function() {
+        this.parent();
+        this.shape = this.rotations[this.currentPosition];
+    },
+
     rotate: function(direction) {
     },
 });
@@ -139,9 +213,23 @@ SShape = Block.extend({
 TShape = Block.extend({
     blockImg: "c4.png",
 
-    shape: [ [ 1, 1, 1],
-             [ 0, 1, 0],
-             [ 0, 0, 0]],
+    rotations: [
+                [ [1, 1, 1],
+                  [0, 1, 0],
+                  [0, 0, 0] ],
+
+                [ [1, 0, 0],
+                  [1, 1, 0],
+                  [1, 0, 0] ],
+
+                [ [0, 1, 0],
+                  [1, 1, 1],
+                  [0, 0, 0] ],
+
+                [ [0, 1, 0],
+                  [1, 1, 0],
+                  [0, 1, 0] ]
+    ],
 
     boundingBox: {
         left: 0*this.blockSize,
@@ -149,6 +237,12 @@ TShape = Block.extend({
         top: 0,
         bottom: 2*this.blockSize
     },
+
+    init: function() {
+        this.parent();
+        this.shape = this.rotations[this.currentPosition];
+    },
+
     rotate: function(direction) {
     },
 });
@@ -156,9 +250,15 @@ TShape = Block.extend({
 ZShape = Block.extend({
     blockImg: "c2.png",
 
-    shape: [ [ 1, 1, 0],
-             [ 0, 1, 1],
-             [ 0, 0, 0]],
+    rotations: [
+                [ [1, 1, 0],
+                  [0, 1, 1],
+                  [0, 0, 0] ],
+
+                [ [0, 1, 0],
+                  [1, 1, 0],
+                  [1, 0, 0] ]
+    ],
 
     boundingBox: {
         left: 0*this.blockSize,
@@ -166,6 +266,12 @@ ZShape = Block.extend({
         top: 0,
         bottom: 2*this.blockSize
     },
+
+    init: function() {
+        this.parent();
+        this.shape = this.rotations[this.currentPosition];
+    },
+
     rotate: function(direction) {
     },
 });
