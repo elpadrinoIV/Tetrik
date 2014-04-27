@@ -54,6 +54,23 @@ Tablero = Class.extend({
         return thereIsSpace;
     },
 
+    completeRows: function() {
+        var completeRows = [];
+        for (var f = 0; f < this.tablero.length; f++) {
+            var rowComplete = true;
+            for (var c = 0; c < this.tablero[f].length; c++) {
+                if (this.tablero[f][c] === 0) {
+                    rowComplete = false;
+                    break;
+                }
+            }
+            if (rowComplete) {
+                completeRows.push(f);
+            }
+        }
+        return completeRows;
+    },
+
     getTablero: function() {
         return this.tablero;
     }

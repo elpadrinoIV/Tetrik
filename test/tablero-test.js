@@ -74,4 +74,34 @@ buster.testCase("Tablero", {
         refute(tablero.blockFits(b2, {x: 0, y: 0}));
         refute(tablero.blockFits(b2, {x: 1, y: 1}));
     },
+
+    "Fila completa": function() {
+        var tablero = new Tablero(4, 3);
+        var formaTablero = [ [0, 0, 0],
+                             [0, 0, 0],
+                             [1, 1, 1],
+                             [0, 0, 0] ];
+
+        tablero.applyBlock(formaTablero, {x: 0, y: 0});
+
+        completeRows = tablero.completeRows();
+
+        assert.equals(completeRows.length, 1);
+        assert.equals(completeRows[0], 2);
+    },
+
+    "Multiples filas completas": function() {
+        var tablero = new Tablero(4, 3);
+        var formaTablero = [ [0, 0, 0],
+                             [0, 0, 0],
+                             [1, 1, 1],
+                             [1, 1, 1] ];
+
+        tablero.applyBlock(formaTablero, {x: 0, y: 0});
+
+        completeRows = tablero.completeRows();
+
+        assert.equals(completeRows.length, 2);
+        assert.equals(completeRows, [2, 3]);
+    },
 });
