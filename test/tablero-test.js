@@ -104,4 +104,70 @@ buster.testCase("Tablero", {
         assert.equals(completeRows.length, 2);
         assert.equals(completeRows, [2, 3]);
     },
+
+    "Eliminar filas completas": function() {
+        var tablero = new Tablero(5, 3);
+        var formaTablero = [ [1, 0, 1],
+                             [0, 2, 0],
+                             [3, 3, 3],
+                             [0, 4, 5],
+                             [5, 3, 7] ];
+
+        tablero.applyBlock(formaTablero, {x: 0, y: 0});
+
+        completeRows = tablero.completeRows();
+        tablero.deleteRows(completeRows);
+
+        var formaTableroEsperado = [ [0, 0, 0],
+                                     [0, 0, 0],
+                                     [1, 0, 1],
+                                     [0, 2, 0],
+                                     [0, 4, 5]];
+
+        assert.equals(tablero.getTablero(), formaTableroEsperado);
+    },
+
+    "Eliminar filas completas desordenadas": function() {
+        var tablero = new Tablero(5, 3);
+        var formaTablero = [ [1, 0, 1],
+                             [0, 2, 0],
+                             [3, 3, 3],
+                             [0, 4, 5],
+                             [5, 3, 7] ];
+
+        tablero.applyBlock(formaTablero, {x: 0, y: 0});
+
+        completeRows = [4, 2];
+        tablero.deleteRows(completeRows);
+
+        var formaTableroEsperado = [ [0, 0, 0],
+                                     [0, 0, 0],
+                                     [1, 0, 1],
+                                     [0, 2, 0],
+                                     [0, 4, 5]];
+
+        assert.equals(tablero.getTablero(), formaTableroEsperado);
+    },
+
+    "Eliminar filas completas invalidas": function() {
+        var tablero = new Tablero(5, 3);
+        var formaTablero = [ [1, 0, 1],
+                             [0, 2, 0],
+                             [3, 3, 3],
+                             [0, 4, 5],
+                             [5, 3, 7] ];
+
+        tablero.applyBlock(formaTablero, {x: 0, y: 0});
+
+        completeRows = [-1, 4, 6, 2];
+        tablero.deleteRows(completeRows);
+
+        var formaTableroEsperado = [ [0, 0, 0],
+                                     [0, 0, 0],
+                                     [1, 0, 1],
+                                     [0, 2, 0],
+                                     [0, 4, 5]];
+
+        assert.equals(tablero.getTablero(), formaTableroEsperado);
+    },
 });

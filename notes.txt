@@ -13,6 +13,8 @@ Attack:
  - shrink: achica mucho el espacio de juego
  - liar: miente acerca de la siguiente pieza
  - lifter: levanta el piso de abajo
+ - fixed: no deja rotar la pieza
+ - random: cada rotación cambia la pieza a otra. Por ej, al girar la I cambia a la J (random)
 
 
 Defense:

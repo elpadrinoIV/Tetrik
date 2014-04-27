@@ -71,6 +71,21 @@ Tablero = Class.extend({
         return completeRows;
     },
 
+    deleteRows: function(rowsToDelete) {
+        rowsToDelete.sort();
+
+        for (var r = 0; r < rowsToDelete.length; r++) {
+            var rowToDelete = rowsToDelete[r];
+            if (rowToDelete >= 0 && rowToDelete < this.tablero.length) {
+                this.tablero.splice(rowToDelete, 1);
+
+                var zeroRow = Array.apply(null, Array(this.size.width));
+                zeroRow = zeroRow.map(function (x, i) {return 0});
+                this.tablero.splice(0, 0, zeroRow);
+            }
+        }
+    },
+
     getTablero: function() {
         return this.tablero;
     }
