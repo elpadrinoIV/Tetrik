@@ -6,3 +6,7 @@ function checkWait(conditionFunction, resultFunction) {
         }
     }, 100);
 }
+
+function timestamp() {
+    return window.performance && window.performance.now ? window.performance.now() : new Data().getTime();
+}
