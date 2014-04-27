@@ -4,7 +4,7 @@ Block = Class.extend({
         h: 25
     },
 
-    pos: {
+    position: {
         x: 0,
         y: 0
     },
@@ -26,9 +26,9 @@ Block = Class.extend({
         this.currentPosition = 0;
     },
 
-    setPos: function(x, y) {
-        this.pos.x = x;
-        this.pos.y = y;
+    setPosition: function(x, y) {
+        this.position.x = x;
+        this.position.y = y;
     },
 
     rotate: function(direction) {
@@ -39,6 +39,11 @@ Block = Class.extend({
         }
 
         this.shape = this.rotations[this.currentPosition];
+    },
+
+    move: function(direction) {
+        this.position.x += direction.x;
+        this.position.y += direction.y;
     },
 
     draw: function() {
@@ -60,6 +65,10 @@ Block = Class.extend({
 
     getShape: function() {
         return this.shape;
+    },
+
+    getPosition: function() {
+        return this.position;
     },
 });
 
