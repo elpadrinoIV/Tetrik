@@ -53,4 +53,25 @@ buster.testCase("Tablero", {
 
         assert(tablero.blockFits(block, {x: 0, y: 0}));
     },
+
+    "No Entra block": function() {
+        var tablero = new Tablero(3, 3);
+        var formaTablero = [ [0, 0, 0],
+                             [0, 1, 0],
+                             [0, 0, 0] ];
+        tablero.applyBlock(formaTablero, {x: 0, y: 0});
+
+        var b1 = [ [1, 1],
+                   [1, 1]];
+
+        refute(tablero.blockFits(b1, {x: 0, y: 0}));
+        refute(tablero.blockFits(b1, {x: 1, y: 1}));
+
+        var b2 = [ [1, 0, 0],
+                   [1, 1, 0],
+                   [1, 0, 0]];
+
+        refute(tablero.blockFits(b2, {x: 0, y: 0}));
+        refute(tablero.blockFits(b2, {x: 1, y: 1}));
+    },
 });
