@@ -31,7 +31,15 @@ Block = Class.extend({
         this.pos.y = y;
     },
 
-    rotate: function(direction) {},
+    rotate: function(direction) {
+        if (direction === "clockwise") {
+            this.currentPosition = (this.currentPosition - 1) % this.rotations.length
+        } else if (direction == "counterclockwise") {
+            this.currentPosition = (this.currentPosition + 1) % this.rotations.length
+        }
+
+        this.shape = this.rotations[this.currentPosition];
+    },
 
     draw: function() {
         console.log("Dibujando");
@@ -48,7 +56,11 @@ Block = Class.extend({
                 }
             }
         }
-    }
+    },
+
+    getShape: function() {
+        return this.shape;
+    },
 });
 
 IShape = Block.extend({
@@ -77,10 +89,6 @@ IShape = Block.extend({
         this.parent();
         this.shape = this.rotations[this.currentPosition];
     },
-
-    rotate: function(direction) {
-    },
-
 });
 
 JShape = Block.extend({
@@ -114,9 +122,6 @@ JShape = Block.extend({
     init: function() {
         this.parent();
         this.shape = this.rotations[this.currentPosition];
-    },
-
-    rotate: function(direction) {
     },
 });
 
@@ -152,9 +157,6 @@ LShape = Block.extend({
         this.parent();
         this.shape = this.rotations[this.currentPosition];
     },
-
-    rotate: function(direction) {
-    },
 });
 
 OShape = Block.extend({
@@ -175,9 +177,6 @@ OShape = Block.extend({
     init: function() {
         this.parent();
         this.shape = this.rotations[this.currentPosition];
-    },
-
-    rotate: function(direction) {
     },
 });
 
@@ -204,9 +203,6 @@ SShape = Block.extend({
     init: function() {
         this.parent();
         this.shape = this.rotations[this.currentPosition];
-    },
-
-    rotate: function(direction) {
     },
 });
 
@@ -242,9 +238,6 @@ TShape = Block.extend({
         this.parent();
         this.shape = this.rotations[this.currentPosition];
     },
-
-    rotate: function(direction) {
-    },
 });
 
 ZShape = Block.extend({
@@ -270,9 +263,6 @@ ZShape = Block.extend({
     init: function() {
         this.parent();
         this.shape = this.rotations[this.currentPosition];
-    },
-
-    rotate: function(direction) {
     },
 });
 
