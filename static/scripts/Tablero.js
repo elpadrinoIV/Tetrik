@@ -1,4 +1,16 @@
 Tablero = Class.extend({
+    areaTablero: null,
+
+    blockSize: {
+        "w": 25,
+        "h": 25
+    },
+
+    offset: {
+        "x": 0,
+        "y": 0
+    },
+
     init: function(rows, columns) {
         if (!rows) {
             rows = 20;
@@ -93,5 +105,34 @@ Tablero = Class.extend({
 
     getTablero: function() {
         return this.tablero;
-    }
+    },
+
+    draw: function() {
+        this.areaTablero.draw(gRenderEngine.context);
+
+        for (var row = 0; row < this.tablero.length; row++) {
+            for (var column = 0; column < this.tablero[row].length; column++) {
+                if (this.tablero[row][column] !== 0) {
+                    xWorld = this.areaTablero.getOffsetTablero().x + column*this.blockSize.w;
+                    yWorld = this.areaTablero.getOffsetTablero().y + row*this.blockSize.h;
+
+                    var blockImg = "c" + this.tablero[row][column] + ".png";
+ //                   console.log("(" + xWorld +", " + yWorld + ") - " + this.blockSize.w + "x" + this.blockSize.h);
+                    drawSprite(blockImg,
+                               xWorld,
+                               yWorld,
+                               this.blockSize.w,
+                               this.blockSize.h);                           
+                }
+            }
+        }
+    },
+
+    loadSpecs: function(specsFile) {
+        this.areaTablero = new AreaTablero(specsFile);
+    },
+
+    loadComplete: function() {
+        return this.areaTablero.tiledMap.fullyLoaded;
+    },
 });

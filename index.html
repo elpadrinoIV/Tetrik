@@ -1,15 +1,28 @@
-<!DOCTYPE html>
+
+<!DOCTYPE HTML>
 <html>
-	<head>
-        <script src="core.js"></script>
-        <script src="bloque.js"></script>
+    <head>
+        <script src="static/scripts/core.js"></script>
+        <script src="static/scripts/utils.js"></script>
+        <script src="static/scripts/xhr.js"></script>
+        <script src="static/scripts/RenderEngine.js"></script>
+        <script src="static/scripts/GameEngine.js"></script>
+        <script src="static/scripts/SpriteSheet.js"></script>
+        <script src="static/scripts/Block.js"></script>
+        <script src="static/scripts/TiledMap.js"></script>
+        <script src="static/scripts/AreaTablero.js"></script>
+        <script src="static/scripts/Tablero.js"></script>
+    </head>
+    <body id="body">
+        <canvas id="canvas"></canvas>
         <script>
-            var b = new Bloque();
-            b.setPos(10, 10);
-            console.log(b.pos.x);
+            gRenderEngine.setup();
+            gGameEngine.setup();
+            checkWait(gGameEngine.loadComplete, function() {
+                var options = {"fps": 60, "canvas": gRenderEngine.canvas, "update": gGameEngine.update, "render": gGameEngine.render};
+                gGameEngine.run(options);
+            });
         </script>
-	</head>
-	<body id="body">
-	</body>
+    </body>
 </html>
 
