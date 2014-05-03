@@ -9,6 +9,16 @@ Block = Class.extend({
         y: 0
     },
 
+    worldPosition: {
+        x: 0,
+        y: 0
+    },
+
+    offset: {
+        x: 0,
+        y: 0
+    },
+
     rotations: null,
 
     currentPosition: 0,
@@ -26,9 +36,18 @@ Block = Class.extend({
         this.currentPosition = 0;
     },
 
+    setup: function(offset, blockSize) {
+        this.offset = offset;
+        this.blockSize = blockSize;
+    },
+
+
     setPosition: function(x, y) {
         this.position.x = x;
         this.position.y = y;
+
+        this.worldPosition.x = this.offset.x + this.position.x*this.blockSize.w;
+        this.worldPosition.y = this.offset.y + this.position.y*this.blockSize.h;
     },
 
     rotate: function(direction) {
@@ -42,8 +61,7 @@ Block = Class.extend({
     },
 
     move: function(direction) {
-        this.position.x += direction.x;
-        this.position.y += direction.y;
+        this.setPosition(this.position.x + direction.x, this.position.y + direction.y);
     },
 
     draw: function() {
@@ -53,8 +71,8 @@ Block = Class.extend({
             for (var colNumber = 0; colNumber < row.length; colNumber++) {
                 if (row[colNumber] !== 0) {
                     drawSprite(this.blockImg,
-                               this.pos.x + colNumber*this.blockSize.w,
-                               this.pos.y + rowNumber*this.blockSize.h,
+                               this.worldPosition.x + colNumber*this.blockSize.w,
+                               this.worldPosition.y + rowNumber*this.blockSize.h,
                                this.blockSize.w,
                                this.blockSize.h);
 
