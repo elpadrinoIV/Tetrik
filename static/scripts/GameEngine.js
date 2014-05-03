@@ -1,5 +1,7 @@
 GameEngine = Class.extend({
     entities: [],
+
+    possibleBlocks: ["IShape", "JShape", "LShape", "OShape", "SShape", "TShape", "ZShape"],
     factory: {},
 
     downSpeed: 4,
@@ -50,10 +52,16 @@ GameEngine = Class.extend({
     update: function () {
         self = gGameEngine;
 
+        if (self.nextBlock === null) {
+            self.nextBlock = self.spawnEntity(self.possibleBlocks[Math.floor(Math.random() * self.possibleBlocks.length)]);
+        }
+
         if (self.currentBlock === null) {
-            self.currentBlock = self.spawnEntity('LShape');
+            self.currentBlock = self.nextBlock;
             self.currentBlock.setup(self.tablero.areaTablero.getOffsetTablero(), {"w": 25, "h": 25});
             self.currentBlock.setPosition(4, -4);
+
+            self.nextBlock = self.spawnEntity(self.possibleBlocks[Math.floor(Math.random() * self.possibleBlocks.length)]);
         }
 
         self.accumulatedTikz += self.downSpeed;
