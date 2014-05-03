@@ -41,7 +41,7 @@ Tablero = Class.extend({
                 var x_final = position.x + c;
                 var y_final = position.y + f;
 
-                if (y_final >= 0 && y_final < this.size.height && x_final >= 0 && x_final < this.size.width) {
+                if (block[f][c] !== 0 && y_final >= 0 && y_final < this.size.height && x_final >= 0 && x_final < this.size.width) {
                     this.tablero[y_final][x_final] = block[f][c];
                 }
             }
