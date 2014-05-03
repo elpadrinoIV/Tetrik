@@ -26,10 +26,10 @@ Block = Class.extend({
     shape: null,
 
     boundingBox: {
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 0
     },
 
     init: function() {
@@ -70,6 +70,7 @@ Block = Class.extend({
             var row = this.shape[rowNumber];
             for (var colNumber = 0; colNumber < row.length; colNumber++) {
                 if (row[colNumber] !== 0) {
+                  //  console.log("this.worldPosition.x: " + this.worldPosition.x + " colNumber*this.blockSize.w: " + colNumber*this.blockSize.w);
                     drawSprite(this.blockImg,
                                this.worldPosition.x + colNumber*this.blockSize.w,
                                this.worldPosition.y + rowNumber*this.blockSize.h,
@@ -106,10 +107,10 @@ IShape = Block.extend({
     ],
 
     boundingBox: {
-        left: 1,
-        right: 2,
-        top: 0,
-        bottom: 4,
+        "left": 1,
+        "right": 2,
+        "top": 0,
+        "bottom": 4,
     },
 
     init: function() {
@@ -140,10 +141,10 @@ JShape = Block.extend({
     ],
 
     boundingBox: {
-        left: 0,
-        right: 3,
-        top: 0,
-        bottom: 2,
+        "left": 0,
+        "right": 3,
+        "top": 0,
+        "bottom": 2,
     },
 
     init: function() {
@@ -174,10 +175,10 @@ LShape = Block.extend({
     ],
 
     boundingBox: {
-        left: 0,
-        right: 3,
-        top: 0,
-        bottom: 2
+        "left": 0,
+        "right": 3,
+        "top": 0,
+        "bottom": 2
     },
 
     init: function() {
@@ -195,10 +196,10 @@ OShape = Block.extend({
     ],
 
     boundingBox: {
-        left: 0,
-        right: 2,
-        top: 0,
-        bottom: 2
+        "left": 0,
+        "right": 2,
+        "top": 0,
+        "bottom": 2
     },
 
     init: function() {
@@ -221,10 +222,10 @@ SShape = Block.extend({
     ],
 
     boundingBox: {
-        left: 0,
-        right: 3,
-        top: 0,
-        bottom: 2
+        "left": 0,
+        "right": 3,
+        "top": 0,
+        "bottom": 2
     },
 
     init: function() {
@@ -255,10 +256,10 @@ TShape = Block.extend({
     ],
 
     boundingBox: {
-        left: 0*this.blockSize,
-        right: 3*this.blockSize,
-        top: 0,
-        bottom: 2*this.blockSize
+        "left": 0,
+        "right": 3,
+        "top": 0,
+        "bottom": 2
     },
 
     init: function() {
@@ -281,10 +282,10 @@ ZShape = Block.extend({
     ],
 
     boundingBox: {
-        left: 0*this.blockSize,
-        right: 3*this.blockSize,
-        top: 0,
-        bottom: 2*this.blockSize
+        "left": 0,
+        "right": 3,
+        "top": 0,
+        "bottom": 2
     },
 
     init: function() {

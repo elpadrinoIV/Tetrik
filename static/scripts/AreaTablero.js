@@ -3,6 +3,8 @@ AreaTablero = Class.extend({
 
     offsetTablero: null,
 
+    offsetNextBlock: null,
+
     init: function(specsFile) {
         this.tiledMap = new TiledMap();
         this.tiledMap.load(specsFile);
@@ -18,5 +20,16 @@ AreaTablero = Class.extend({
         }
 
         return {"x": this.offsetTablero.x, "y": this.offsetTablero.y};
-    }
+    },
+
+    getOffsetNextBlock: function() {
+        if (this.offsetNextBlock === null) {
+            this.offsetNextBlock = this.tiledMap.getObjects().next;
+        }
+
+        return {"x": this.offsetNextBlock.x,
+                "y": this.offsetNextBlock.y,
+                "w": this.offsetNextBlock.w,
+                "h": this.offsetNextBlock.h};
+    },
 });

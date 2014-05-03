@@ -14,6 +14,11 @@ GameEngine = Class.extend({
 
     tablero: null,
 
+    blockSize: {
+        "w": 25,
+        "h": 25
+    },
+
     //fondo: null,
 
     preloadComplete: false,
@@ -53,15 +58,15 @@ GameEngine = Class.extend({
         self = gGameEngine;
 
         if (self.nextBlock === null) {
-            self.nextBlock = self.spawnEntity(self.possibleBlocks[Math.floor(Math.random() * self.possibleBlocks.length)]);
+            self.nextBlock = self.generateNextBlock();
         }
 
         if (self.currentBlock === null) {
             self.currentBlock = self.nextBlock;
-            self.currentBlock.setup(self.tablero.areaTablero.getOffsetTablero(), {"w": 25, "h": 25});
+            self.currentBlock.setup(self.tablero.areaTablero.getOffsetTablero(), self.blockSize);
             self.currentBlock.setPosition(4, -4);
 
-            self.nextBlock = self.spawnEntity(self.possibleBlocks[Math.floor(Math.random() * self.possibleBlocks.length)]);
+            self.nextBlock = self.generateNextBlock();
         }
 
         self.accumulatedTikz += self.downSpeed;
@@ -80,6 +85,19 @@ GameEngine = Class.extend({
         }
     },
 
+    generateNextBlock: function() {
+        var nextBlock = self.spawnEntity(this.possibleBlocks[Math.floor(Math.random() * this.possibleBlocks.length)]);
+        var offset = this.tablero.areaTablero.getOffsetNextBlock();
+        var position = {"x": 0, "y": 0};
+        position.x = offset.x + offset.w/2 - (nextBlock.boundingBox.right - nextBlock.boundingBox.left)*this.blockSize.w/2 - nextBlock.boundingBox.left*this.blockSize.w;
+        position.y = offset.y + offset.h/2 - (nextBlock.boundingBox.bottom - nextBlock.boundingBox.top)*this.blockSize.h/2 - nextBlock.boundingBox.top*this.blockSize.h;
+
+        nextBlock.setup({"x": 0, "y": 0}, this.blockSize);
+
+        nextBlock.worldPosition = position;
+        return nextBlock;
+    },
+
     render: function() {
         gRenderEngine.context.clearRect(0, 0, gRenderEngine.canvas.width, gRenderEngine.canvas.height);
                 
@@ -88,6 +106,10 @@ GameEngine = Class.extend({
         gGameEngine.tablero.draw();
         if (self.currentBlock !== null) {
             self.currentBlock.draw();
+        }
+
+        if (self.nextBlock !== null) {
+            self.nextBlock.draw();
         }
     },
 
