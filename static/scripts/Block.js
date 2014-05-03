@@ -65,7 +65,7 @@ Block = Class.extend({
     },
 
     draw: function() {
-        console.log("Dibujando");
+       // console.log("Dibujando");
         for (var rowNumber = 0; rowNumber < this.shape.length; rowNumber++) {
             var row = this.shape[rowNumber];
             for (var colNumber = 0; colNumber < row.length; colNumber++) {
@@ -86,7 +86,7 @@ Block = Class.extend({
     },
 
     getPosition: function() {
-        return this.position;
+        return {"x": this.position.x, "y": this.position.y};
     },
 });
 
