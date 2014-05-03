@@ -75,6 +75,34 @@ buster.testCase("Tablero", {
         refute(tablero.blockFits(b2, {x: 1, y: 1}));
     },
 
+    "Block fuera del tablero": function() {
+        var tablero = new Tablero(4, 3);
+        var block = [ [1, 1],
+                      [1, 1]];
+
+        // Arriba vale
+        assert(tablero.blockFits(block, {x: 0, y: -1}));
+
+        // A la izquierda, derecho o abajo del tablero, no vale
+        refute (tablero.blockFits(block, {x: -1, y: 0}));
+        refute (tablero.blockFits(block, {x: 2, y: 0}));
+        refute (tablero.blockFits(block, {x: 0, y: 3}));
+    },
+
+    "Empty space fuera del tablero, bloque adentro": function() {
+        var tablero = new Tablero(4, 3);
+        var block = [ [0, 0, 0, 0],
+                      [0, 1, 1, 0],
+                      [0, 1, 1, 0],
+                      [0, 0, 0, 0] ];
+
+        assert (tablero.blockFits(block, {x: 0, y: -3}));
+        assert (tablero.blockFits(block, {x: -1, y: 0}));
+        assert (tablero.blockFits(block, {x: 0, y: 0}));
+        assert (tablero.blockFits(block, {x: 0, y: 1}));
+    },
+
+
     "Fila completa": function() {
         var tablero = new Tablero(4, 3);
         var formaTablero = [ [0, 0, 0],
