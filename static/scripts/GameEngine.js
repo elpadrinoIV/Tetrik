@@ -44,6 +44,8 @@ GameEngine = Class.extend({
         this.tablero.loadSpecs('static/images/tablerotetris.json');
 
         this.preLoadAssets();
+
+        gInputEngine.setup();
     },
 
     loadComplete: function() {
@@ -69,7 +71,38 @@ GameEngine = Class.extend({
             self.nextBlock = self.generateNextBlock();
         }
 
+        if (gInputEngine.actions['move-left']) {
+            var newPos = self.currentBlock.getPosition();
+            newPos.x -= 1;
+            if (self.tablero.blockFits(self.currentBlock.shape, newPos)) {
+                self.currentBlock.move({x:-1, y: 0});
+            }
+            gInputEngine.actions['move-left'] = false;
+        }
+
+        if (gInputEngine.actions['move-right']) {
+            var newPos = self.currentBlock.getPosition();
+            newPos.x += 1;
+            if (self.tablero.blockFits(self.currentBlock.shape, newPos)) {
+                self.currentBlock.move({x:1, y: 0});
+            }
+
+            gInputEngine.actions['move-right'] = false;
+        }
+
+        if (gInputEngine.actions['rotate']) {
+            var newShape = self.currentBlock.rotations[self.currentBlock.nextRotation('counterclockwise')];
+            if (self.tablero.blockFits(newShape, self.currentBlock.getPosition())) {
+                self.currentBlock.rotate('counterclockwise');
+            }
+            gInputEngine.actions['rotate'] = false;
+        }
+
         self.accumulatedTikz += self.downSpeed;
+        if (gInputEngine.actions['move-down']) {
+            self.accumulatedTikz += 20;
+        }
+
         if (self.accumulatedTikz >= 100) {
             var newPos = self.currentBlock.getPosition();
             newPos.y += 1;

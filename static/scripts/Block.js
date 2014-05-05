@@ -51,13 +51,19 @@ Block = Class.extend({
     },
 
     rotate: function(direction) {
+        this.currentPosition = this.nextRotation(direction);
+        this.shape = this.rotations[this.currentPosition];
+    },
+
+    nextRotation: function(direction) {
+        var nextPosition = 0;
         if (direction === "clockwise") {
-            this.currentPosition = (this.currentPosition - 1) % this.rotations.length
-        } else if (direction == "counterclockwise") {
-            this.currentPosition = (this.currentPosition + 1) % this.rotations.length
+            nextPosition = (this.currentPosition - 1) % this.rotations.length
+        } else if (direction === "counterclockwise") {
+            nextPosition = (this.currentPosition + 1) % this.rotations.length
         }
 
-        this.shape = this.rotations[this.currentPosition];
+        return nextPosition;
     },
 
     move: function(direction) {
