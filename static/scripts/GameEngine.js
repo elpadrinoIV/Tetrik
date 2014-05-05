@@ -116,6 +116,11 @@ GameEngine = Class.extend({
             
             self.accumulatedTikz = 0;
         }
+
+        var completeRows = self.tablero.completeRows();
+        if (completeRows.length > 0) {
+            self.tablero.deleteRows(completeRows);
+        }
     },
 
     generateNextBlock: function() {
