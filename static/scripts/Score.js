@@ -36,7 +36,7 @@ Score = Class.extend({
         this.numberSize.h = numSize;
 
         this.offset.x = (this.size.w - this.maxNumbers) / (this.maxNumbers + 1);
-        //this.offset.y = (this.numberSize.w - this.maxNumbers) / (this.maxNumbers + 1);
+        this.offset.y = (this.size.h - 1) / (1 + 1);
     },
 
     add: function(points) {
@@ -51,7 +51,7 @@ Score = Class.extend({
             imageNumber = stringScore[i] + ".png";
             var position = {
                 "x": this.position.x + this.offset.x + (i + this.maxNumbers - stringScore.length)*(this.offset.x + 1),
-                "y": this.position.y
+                "y": this.position.y + this.offset.y
             };
 
             imageRepresentation.push({"img": imageNumber, "position": position});

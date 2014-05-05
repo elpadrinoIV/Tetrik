@@ -112,4 +112,19 @@ buster.testCase("Score", {
         assert.equals(imageRepresentation[0].position, {"x": 3, "y": 0});
         assert.equals(imageRepresentation[1].position, {"x": 5, "y": 0});
     },
+
+    "Position offset en y": function() {
+        var score = new Score();
+        var position = { "x": 0, "y": 0};
+        var size = { "w": 3, "h": 2};
+
+        score.setup(position, size, 3);
+        score.add(789);
+
+        var imageRepresentation = score.getImageRepresentation();
+
+        for (var i = 0; i < 3; i++) {
+            assert.equals(imageRepresentation[i].position, {"x": i, "y": 0.5});
+        }
+    },
 });
