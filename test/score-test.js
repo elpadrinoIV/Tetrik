@@ -43,7 +43,6 @@ buster.testCase("Score", {
         assert.equals(score.numberSize, {"w": 2, "h": 2});
     },
 
-
     "Number size limita height": function() {
         var score = new Score();
         var position = { "x": 0, "y": 0};
@@ -52,5 +51,36 @@ buster.testCase("Score", {
         score.setup(position, size, 5);
 
         assert.equals(score.numberSize, {"w": 0.5, "h": 0.5});
-    }
+    },
+
+    "Position sencillo": function() {
+        var score = new Score();
+        var position = { "x": 0, "y": 0};
+        var size = { "w": 5, "h": 1};
+
+        score.setup(position, size, 5);
+        score.add(12345);
+
+        var imageRepresentation = score.getImageRepresentation();
+
+        for (var i = 0; i < 5; i++) {
+            assert.equals(imageRepresentation[i].position, {"x": i, "y": 0});
+        }
+    },
+
+    "Position offset en x": function() {
+        var score = new Score();
+        var position = { "x": 0, "y": 0};
+        var size = { "w": 7, "h": 1};
+
+        score.setup(position, size, 3);
+        score.add(789);
+
+        var imageRepresentation = score.getImageRepresentation();
+
+        for (var i = 0; i < 3; i++) {
+            var pos = 1 + i*2;
+            assert.equals(imageRepresentation[i].position, {"x": pos, "y": 0});
+        }
+    },
 });

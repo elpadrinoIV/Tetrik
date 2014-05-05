@@ -14,6 +14,11 @@ Score = Class.extend({
         "h": 0
     },
 
+    offset: {
+        "x": 0,
+        "y": 0
+    },
+
     maxNumbers: 7,
 
     score: 0,
@@ -29,6 +34,9 @@ Score = Class.extend({
         var numSize = Math.min(this.size.w/this.maxNumbers, this.size.h);
         this.numberSize.w = numSize;
         this.numberSize.h = numSize;
+
+        this.offset.x = (this.size.w - this.maxNumbers) / (this.maxNumbers + 1);
+        //this.offset.y = (this.numberSize.w - this.maxNumbers) / (this.maxNumbers + 1);
     },
 
     add: function(points) {
@@ -41,7 +49,12 @@ Score = Class.extend({
         var imageNumber = "";
         for (var i = 0; i < stringScore.length; i++) {
             imageNumber = stringScore[i] + ".png";
-            imageRepresentation.push({"img": imageNumber});
+            var position = {
+                "x": this.position.x + this.offset.x + i*(this.offset.x + 1),
+                "y": this.position.y
+            };
+
+            imageRepresentation.push({"img": imageNumber, "position": position});
         }
         return imageRepresentation;
     }
