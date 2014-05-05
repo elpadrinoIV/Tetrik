@@ -1,11 +1,6 @@
 Tablero = Class.extend({
     areaTablero: null,
 
-    blockSize: {
-        "w": 25,
-        "h": 25
-    },
-
     offset: {
         "x": 0,
         "y": 0
@@ -113,16 +108,16 @@ Tablero = Class.extend({
         for (var row = 0; row < this.tablero.length; row++) {
             for (var column = 0; column < this.tablero[row].length; column++) {
                 if (this.tablero[row][column] !== 0) {
-                    xWorld = this.areaTablero.getOffsetTablero().x + column*this.blockSize.w;
-                    yWorld = this.areaTablero.getOffsetTablero().y + row*this.blockSize.h;
+                    xWorld = this.areaTablero.getOffsetTablero().x + column*gRenderEngine.blockSize.w;
+                    yWorld = this.areaTablero.getOffsetTablero().y + row*gRenderEngine.blockSize.h;
 
                     var blockImg = "c" + this.tablero[row][column] + ".png";
  //                   console.log("(" + xWorld +", " + yWorld + ") - " + this.blockSize.w + "x" + this.blockSize.h);
                     drawSprite(blockImg,
                                xWorld,
                                yWorld,
-                               this.blockSize.w,
-                               this.blockSize.h);                           
+                               gRenderEngine.blockSize.w,
+                               gRenderEngine.blockSize.h);                           
                 }
             }
         }

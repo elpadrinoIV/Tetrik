@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="1" height="1" tilewidth="550" tileheight="550">
+ <tileset firstgid="1" name="background" tilewidth="550" tileheight="550">
+  <image source="static/images/mano/background.png" width="550" height="550"/>
+ </tileset>
+ <layer name="Background" width="1" height="1">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgAAAACAAC
+  </data>
+ </layer>
+ <objectgroup name="zonas" width="1" height="1">
+  <object name="next" x="346" y="59" width="164" height="143"/>
+  <object name="score" x="347" y="250" width="166" height="23"/>
+  <object name="powerups" x="347" y="321" width="166" height="190"/>
+  <object name="tablero" x="60" y="36" width="238" height="476"/>
+ </objectgroup>
+</map>

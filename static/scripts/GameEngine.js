@@ -13,12 +13,12 @@ GameEngine = Class.extend({
     nextBlock: null,
 
     tablero: null,
-
+/*
     blockSize: {
-        "w": 25,
-        "h": 25
+        "w": 42.8,
+        "h": 42.8
     },
-
+*/
     //fondo: null,
 
     preloadComplete: false,
@@ -26,11 +26,11 @@ GameEngine = Class.extend({
     preLoadAssets: function() {
         console.log("preload called");
         var assets = new Array();
-        assets.push("static/images/blocksAtlas.png");
+        assets.push("static/images/mano/atlas.png");
 
-        xhrGet("static/images/blocksAtlas.json", function(data) {
+        xhrGet("static/images/mano/atlas.json", function(data) {
             var sheet = new SpriteSheet();
-            sheet.load("static/images/blocksAtlas.png");
+            sheet.load("static/images/mano/atlas.png");
             sheet.parseAtlasDefinition(data.response);
             gGameEngine.preloadComplete = true;
         });
@@ -41,7 +41,7 @@ GameEngine = Class.extend({
         console.log("setup gameengine");
 
         this.tablero = new Tablero(20, 10);
-        this.tablero.loadSpecs('static/images/tablerotetris.json');
+        this.tablero.loadSpecs('static/images/mano/tablero.json');
 
         this.preLoadAssets();
 
@@ -65,7 +65,8 @@ GameEngine = Class.extend({
 
         if (self.currentBlock === null) {
             self.currentBlock = self.nextBlock;
-            self.currentBlock.setup(self.tablero.areaTablero.getOffsetTablero(), self.blockSize);
+            console.log(gRenderEngine.blockSize);
+            self.currentBlock.setup(self.tablero.areaTablero.getOffsetTablero(), gRenderEngine.blockSize);
             self.currentBlock.setPosition(4, -4);
 
             self.nextBlock = self.generateNextBlock();
@@ -127,10 +128,10 @@ GameEngine = Class.extend({
         var nextBlock = self.spawnEntity(this.possibleBlocks[Math.floor(Math.random() * this.possibleBlocks.length)]);
         var offset = this.tablero.areaTablero.getOffsetNextBlock();
         var position = {"x": 0, "y": 0};
-        position.x = offset.x + offset.w/2 - (nextBlock.boundingBox.right - nextBlock.boundingBox.left)*this.blockSize.w/2 - nextBlock.boundingBox.left*this.blockSize.w;
-        position.y = offset.y + offset.h/2 - (nextBlock.boundingBox.bottom - nextBlock.boundingBox.top)*this.blockSize.h/2 - nextBlock.boundingBox.top*this.blockSize.h;
+        position.x = offset.x + offset.w/2 - (nextBlock.boundingBox.right - nextBlock.boundingBox.left)*gRenderEngine.blockSize.w/2 - nextBlock.boundingBox.left*gRenderEngine.blockSize.w;
+        position.y = offset.y + offset.h/2 - (nextBlock.boundingBox.bottom - nextBlock.boundingBox.top)*gRenderEngine.blockSize.h/2 - nextBlock.boundingBox.top*gRenderEngine.blockSize.h;
 
-        nextBlock.setup({"x": 0, "y": 0}, this.blockSize);
+        nextBlock.setup({"x": 0, "y": 0}, gRenderEngine.blockSize);
 
         nextBlock.worldPosition = position;
         return nextBlock;
