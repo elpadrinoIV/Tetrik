@@ -68,6 +68,21 @@ buster.testCase("Score", {
         }
     },
 
+    "Position sencillo menos numeros que el total": function() {
+        var score = new Score();
+        var position = { "x": 0, "y": 0};
+        var size = { "w": 5, "h": 1};
+
+        score.setup(position, size, 5);
+        score.add(123);
+
+        var imageRepresentation = score.getImageRepresentation();
+
+        for (var i = 0; i < 3; i++) {
+            assert.equals(imageRepresentation[i].position, {"x": i + 2, "y": 0});
+        }
+    },
+
     "Position offset en x": function() {
         var score = new Score();
         var position = { "x": 0, "y": 0};
@@ -82,5 +97,19 @@ buster.testCase("Score", {
             var pos = 1 + i*2;
             assert.equals(imageRepresentation[i].position, {"x": pos, "y": 0});
         }
+    },
+
+    "Position offset en x menos numeros que el total": function() {
+        var score = new Score();
+        var position = { "x": 0, "y": 0};
+        var size = { "w": 7, "h": 1};
+
+        score.setup(position, size, 3);
+        score.add(54);
+
+        var imageRepresentation = score.getImageRepresentation();
+
+        assert.equals(imageRepresentation[0].position, {"x": 3, "y": 0});
+        assert.equals(imageRepresentation[1].position, {"x": 5, "y": 0});
     },
 });
