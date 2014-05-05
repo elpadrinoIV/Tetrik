@@ -109,7 +109,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "image":"static/images/background.png",
+         "image":"static/images/comun/background.png",
          "imageheight":550,
          "imagewidth":550,
          "margin":0,
