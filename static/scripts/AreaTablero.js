@@ -5,9 +5,8 @@ AreaTablero = Class.extend({
 
     offsetNextBlock: null,
 
-    init: function(specsFile) {
-        this.tiledMap = new TiledMap();
-        this.tiledMap.load(specsFile);
+    init: function(tiledMap) {
+        this.tiledMap = tiledMap;
     },
 
     draw: function(context) {

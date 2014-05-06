@@ -19,6 +19,10 @@ Tablero = Class.extend({
         this.size = {width: columns, height: rows};
     },
 
+    setup: function(tiledMap) {
+        this.areaTablero = new AreaTablero(tiledMap);
+    },
+
     generarTableroVacio: function(filas, columnas) {
         var tableroVacio = new Array();
         for (var fila = 0; fila < filas; fila++) {
@@ -123,11 +127,4 @@ Tablero = Class.extend({
         }
     },
 
-    loadSpecs: function(specsFile) {
-        this.areaTablero = new AreaTablero(specsFile);
-    },
-
-    loadComplete: function() {
-        return this.areaTablero.tiledMap.fullyLoaded;
-    },
 });

@@ -1,7 +1,10 @@
 GameEngine = Class.extend({
+    tiledMap: null,
+
     entities: [],
 
     possibleBlocks: ["IShape", "JShape", "LShape", "OShape", "SShape", "TShape", "ZShape"],
+
     factory: {},
 
     downSpeed: 4,
@@ -13,18 +16,12 @@ GameEngine = Class.extend({
     nextBlock: null,
 
     tablero: null,
-/*
-    blockSize: {
-        "w": 42.8,
-        "h": 42.8
-    },
-*/
-    //fondo: null,
+    
+    score: null,
 
     preloadComplete: false,
 
     preLoadAssets: function() {
-        console.log("preload called");
         var assets = new Array();
         assets.push("static/images/mano/atlas.png");
 
@@ -38,10 +35,14 @@ GameEngine = Class.extend({
 
     setup: function() {
         // cargar todo
-        console.log("setup gameengine");
 
         this.tablero = new Tablero(20, 10);
-        this.tablero.loadSpecs('static/images/mano/tablero.json');
+        // this.tablero.loadSpecs('static/images/mano/tablero.json');
+
+        this.tiledMap = new TiledMap();
+        this.tiledMap.load('static/images/mano/tablero.json');
+
+        this.score = new Score();
 
         this.preLoadAssets();
 
@@ -49,7 +50,7 @@ GameEngine = Class.extend({
     },
 
     loadComplete: function() {
-        return (gGameEngine.preloadComplete && gGameEngine.tablero.loadComplete());
+        return (gGameEngine.preloadComplete && gGameEngine.tiledMap.fullyLoaded);
     },
 
     spawnEntity: function (typename) {
@@ -113,6 +114,7 @@ GameEngine = Class.extend({
             } else {
                 self.tablero.applyBlock(self.currentBlock.shape, self.currentBlock.getPosition());
                 self.currentBlock = null;
+                self.score.add(17);
             }
             
             self.accumulatedTikz = 0;
@@ -150,6 +152,8 @@ GameEngine = Class.extend({
         if (self.nextBlock !== null) {
             self.nextBlock.draw();
         }
+
+        gGameEngine.score.draw();
     },
 
     run: function(options) {
@@ -159,6 +163,8 @@ GameEngine = Class.extend({
             step = 1.0/options.fps,
             update = this.update,
             render = this.render;
+        
+        this.setupComponents();
 
         function frame() {
             now = timestamp();
@@ -174,6 +180,20 @@ GameEngine = Class.extend({
         }
 
         requestAnimationFrame(frame);
+    },
+
+    setupComponents: function() {
+        this.tablero.setup(this.tiledMap);
+        var scorePosition = {
+            "x": this.tiledMap.getObjects().score.x,
+            "y": this.tiledMap.getObjects().score.y,
+        };
+        var scoreSize = {
+            "w": this.tiledMap.getObjects().score.w,
+            "h": this.tiledMap.getObjects().score.h,
+        };
+
+        this.score.setup(scorePosition, scoreSize, 7);
     },
 });
 

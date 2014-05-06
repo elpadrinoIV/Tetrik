@@ -57,5 +57,16 @@ Score = Class.extend({
             imageRepresentation.push({"img": imageNumber, "position": position});
         }
         return imageRepresentation;
-    }
+    },
+
+    draw: function() {
+        var imageRepresentation = this.getImageRepresentation();
+        for (var n = 0; n < imageRepresentation.length; n++) {
+            drawSprite(imageRepresentation[n].img,
+                       imageRepresentation[n].position.x,
+                       imageRepresentation[n].position.y,
+                       this.numberSize.w,
+                       this.numberSize.h);
+        }
+    },
 });
