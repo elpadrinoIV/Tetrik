@@ -65,7 +65,6 @@ GameEngine = Class.extend({
 
         if (self.currentBlock === null) {
             self.currentBlock = self.nextBlock;
-            console.log(gRenderEngine.blockSize);
             self.currentBlock.setup(self.tablero.areaTablero.getOffsetTablero(), gRenderEngine.blockSize);
             self.currentBlock.setPosition(4, -4);
 

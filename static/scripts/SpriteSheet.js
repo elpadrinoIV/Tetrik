@@ -36,15 +36,15 @@ SpriteSheet = Class.extend({
     },
 
     // define sprite for this atlas
-    defSprite: function (name, x, y, w, h, cx, cy) {
+    defSprite: function (name, x, y, w, h, sx, sy) {
         var spt = {
             "id": name,
             "x": x,
             "y": y,
             "w": w,
             "h": h,
-            "cx": cx == null? 0: cx,
-            "cy": cy == null? 0: cy
+            "sx": sx,
+            "sy": sy
         };
 
         this.sprites.push(spt);
@@ -55,21 +55,13 @@ SpriteSheet = Class.extend({
         for (var i = 0; i < atlas.frames.length; i++) {
             var img_data = atlas.frames[i];
 
-            var cx = -img_data.frame.w * 0.5;
-            var cy = -img_data.frame.h * 0.5;
-
-            if (img_data.trimmed) {
-                cx = img_data.spriteSourceSize.x - img_data.sourceSize.w*0.5;
-                cy = img_data.spriteSourceSize.y - img_data.sourceSize.h*0.5;
-            }
-
             this.defSprite(img_data.filename, 
                            img_data.frame.x,
                            img_data.frame.y,
                            img_data.frame.w,
                            img_data.frame.h,
-                           cx,
-                           cy);
+                           img_data.spriteSourceSize.x,
+                           img_data.spriteSourceSize.y);
 
         }
     },
@@ -109,6 +101,7 @@ function __drawSpriteInternal(sprite, sheet, posX, posY, width, height) {
     }
 
     gRenderEngine.context.drawImage(sheet.img,
-                      sprite.x, sprite.y, sprite.w, sprite.h,
-                      posX, posY, width, height);
+                                    sprite.x, sprite.y, sprite.w, sprite.h,
+                                    posX + sprite.sx - width*0.5, posY + sprite.sy - height*0.5, width, height);
 }
+

@@ -78,8 +78,8 @@ Block = Class.extend({
                 if (row[colNumber] !== 0) {
                   //  console.log("this.worldPosition.x: " + this.worldPosition.x + " colNumber*this.blockSize.w: " + colNumber*this.blockSize.w);
                     drawSprite(this.blockImg,
-                               this.worldPosition.x + colNumber*this.blockSize.w,
-                               this.worldPosition.y + rowNumber*this.blockSize.h,
+                               this.worldPosition.x + colNumber*this.blockSize.w + this.blockSize.w*0.5,
+                               this.worldPosition.y + rowNumber*this.blockSize.h + this.blockSize.h*0.5,
                                this.blockSize.w,
                                this.blockSize.h);
 
