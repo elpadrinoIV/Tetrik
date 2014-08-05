@@ -36,7 +36,7 @@ SpriteSheet = Class.extend({
     },
 
     // define sprite for this atlas
-    defSprite: function (name, x, y, w, h, sx, sy) {
+    defSprite: function (name, x, y, w, h, sx, sy, source_w, source_h) {
         var spt = {
             "id": name,
             "x": x,
@@ -44,7 +44,9 @@ SpriteSheet = Class.extend({
             "w": w,
             "h": h,
             "sx": sx,
-            "sy": sy
+            "sy": sy,
+            "source_w": source_w,
+            "source_h": source_h
         };
 
         this.sprites.push(spt);
@@ -61,7 +63,9 @@ SpriteSheet = Class.extend({
                            img_data.frame.w,
                            img_data.frame.h,
                            img_data.spriteSourceSize.x,
-                           img_data.spriteSourceSize.y);
+                           img_data.spriteSourceSize.y,
+                           img_data.sourceSize.w,
+                           img_data.sourceSize.h);
 
         }
     },
@@ -100,8 +104,16 @@ function __drawSpriteInternal(sprite, sheet, posX, posY, width, height) {
         height = sprite.h;
     }
 
+    var scaleFactor = {
+        "w": width/sprite.source_w,
+        "h": height/sprite.source_h
+    };
+
     gRenderEngine.context.drawImage(sheet.img,
                                     sprite.x, sprite.y, sprite.w, sprite.h,
-                                    posX + sprite.sx - width*0.5, posY + sprite.sy - height*0.5, width, height);
+                                    posX + (sprite.sx - sprite.source_w*0.5)*scaleFactor.w,
+                                    posY + (sprite.sy - sprite.source_h*0.5)*scaleFactor.h,
+                                    sprite.w*scaleFactor.w,
+                                    sprite.h*scaleFactor.h);
 }
 

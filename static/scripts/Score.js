@@ -50,8 +50,9 @@ Score = Class.extend({
         for (var i = 0; i < stringScore.length; i++) {
             imageNumber = stringScore[i] + ".png";
             var position = {
-                "x": this.position.x + this.offset.x + (i + this.maxNumbers - stringScore.length)*(this.offset.x + 1),
-                "y": this.position.y + this.offset.y
+                //"x": this.position.x + this.offset.x + (i + this.maxNumbers - stringScore.length)*(this.offset.x + 1),
+                "x": this.position.x + this.numberSize.w*0.5 + (this.maxNumbers - stringScore.length + i)*this.numberSize.w ,
+                "y": this.position.y + this.size.h*0.5//this.offset.y
             };
 
             imageRepresentation.push({"img": imageNumber, "position": position});
