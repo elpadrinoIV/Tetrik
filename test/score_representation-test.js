@@ -2,7 +2,7 @@ var buster = require("buster");
 var assert = buster.referee.assert;
 var refute = buster.referee.refute;
 
-buster.testCase("Score", {
+buster.testCase("Score representation", {
     "Representacion en numeros 0": function() {
         var score = new Score();
         var imageRepresentation = score.getImageRepresentation();

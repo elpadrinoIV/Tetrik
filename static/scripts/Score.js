@@ -43,6 +43,15 @@ Score = Class.extend({
         this.score += points;
     },
 
+    blockDropped: function(time) {
+        var minScore = gConfig.get("block_min_score");
+        var maxScore = gConfig.get("block_min_score");
+    },
+
+    getScore: function() {
+        return this.score;
+    },
+
     getImageRepresentation: function() {
         var imageRepresentation = [];
         var stringScore = this.score.toString();

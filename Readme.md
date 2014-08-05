@@ -46,3 +46,10 @@ Si tarda:
  - 0 segundos, obtendrá 50 puntos.
  - 5 segundos, obtendrá 30 puntos.
  - 10 o más segundos, obtendrá 10 puntos.
+
+## Por lineas completas
+Cuando se completan una o más líneas, se obtienen puntos extra (se siguen obteniendo los puntos por pieza).
+ - 1 línea: 50 puntos.
+ - 2 líneas: 120 puntos.
+ - 3 líneas: 200 puntos.
+ - 4 líneas: 400 puntos.
