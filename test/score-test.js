@@ -64,7 +64,7 @@ buster.testCase("Score", {
         var imageRepresentation = score.getImageRepresentation();
 
         for (var i = 0; i < 5; i++) {
-            assert.equals(imageRepresentation[i].position, {"x": i, "y": 0});
+            assert.equals(imageRepresentation[i].position, {"x": i + 0.5, "y": 0.5});
         }
     },
 
@@ -79,7 +79,7 @@ buster.testCase("Score", {
         var imageRepresentation = score.getImageRepresentation();
 
         for (var i = 0; i < 3; i++) {
-            assert.equals(imageRepresentation[i].position, {"x": i + 2, "y": 0});
+            assert.equals(imageRepresentation[i].position, {"x": i + 2 + 0.5, "y": 0.5});
         }
     },
 
@@ -94,8 +94,24 @@ buster.testCase("Score", {
         var imageRepresentation = score.getImageRepresentation();
 
         for (var i = 0; i < 3; i++) {
-            var pos = 1 + i*2;
-            assert.equals(imageRepresentation[i].position, {"x": pos, "y": 0});
+            var pos = 1 + i*2 + 0.5;
+            assert.equals(imageRepresentation[i].position, {"x": pos, "y": 0.5});
+        }
+    },
+
+    "Position offset en x width distinto de 1": function() {
+        var score = new Score();
+        var position = { "x": 0, "y": 0};
+        var size = { "w": 14, "h": 2};
+
+        score.setup(position, size, 3);
+        score.add(789);
+
+        var imageRepresentation = score.getImageRepresentation();
+
+        for (var i = 0; i < 3; i++) {
+            var pos = 3 + i*4 ;
+            assert.equals(imageRepresentation[i].position, {"x": pos, "y": 1});
         }
     },
 
@@ -109,8 +125,22 @@ buster.testCase("Score", {
 
         var imageRepresentation = score.getImageRepresentation();
 
-        assert.equals(imageRepresentation[0].position, {"x": 3, "y": 0});
-        assert.equals(imageRepresentation[1].position, {"x": 5, "y": 0});
+        assert.equals(imageRepresentation[0].position, {"x": 3.5, "y": 0.5});
+        assert.equals(imageRepresentation[1].position, {"x": 5.5, "y": 0.5});
+    },
+
+    "Position offset en x menos numeros que el total width distinto de 1": function() {
+        var score = new Score();
+        var position = { "x": 0, "y": 0};
+        var size = { "w": 14, "h": 2};
+
+        score.setup(position, size, 3);
+        score.add(54);
+
+        var imageRepresentation = score.getImageRepresentation();
+
+        assert.equals(imageRepresentation[0].position, {"x": 7, "y": 1});
+        assert.equals(imageRepresentation[1].position, {"x": 11, "y": 1});
     },
 
     "Position offset en y": function() {
@@ -124,7 +154,21 @@ buster.testCase("Score", {
         var imageRepresentation = score.getImageRepresentation();
 
         for (var i = 0; i < 3; i++) {
-            assert.equals(imageRepresentation[i].position, {"x": i, "y": 0.5});
+            assert.equals(imageRepresentation[i].position, {"x": i + 0.5, "y": 1});
         }
+    },
+
+    "Position offset en y width distinto de 1": function() {
+        var score = new Score();
+        var position = { "x": 0, "y": 0};
+        var size = { "w": 4, "h": 3};
+
+        score.setup(position, size, 2);
+        score.add(78);
+
+        var imageRepresentation = score.getImageRepresentation();
+
+        assert.equals(imageRepresentation[0].position, {"x": 1, "y": 1.5});
+        assert.equals(imageRepresentation[1].position, {"x": 3, "y": 1.5});
     },
 });
