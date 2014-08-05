@@ -1,6 +1,6 @@
-Power ups
+# Power ups
 
-Attack:
+## Attack
  - frozen: congela durante un tiempo la pantalla
  - basura: random bloques, de 3 a 7 bloques en columnas distintas
  - thief: roba puntos al otro
@@ -17,8 +17,32 @@ Attack:
  - random: cada rotación cambia la pieza a otra. Por ej, al girar la I cambia a la J (random)
 
 
-Defense:
+## Defense
  - anti-frozen: descongela antes del tiempo
  - eliminar filas
  - blocker: bloquea automáticamente el siguiente ataque
  - anti-lifter: baja el piso automáticamente
+
+
+# Score
+
+## Por pieza
+Cuando cae una pieza, se le asigna un puntaje. Cuanto menos tarde la pieza en
+caer, mayor será el puntaje. De este modo, la primer pieza en la velocidad más
+lenta tendrá el menor puntaje, mientras que si se juega a máxima velocidad en
+la parte superior del tablero, el puntaje será mayor.
+
+Las piezas constan de un puntaje mínimo y uno máximo. El máximo posiblemente
+sea imposible de alcanzar (un tiempo de 0), mientras que el mínimo se obtendrá
+luego de un tiempo determinado (sin importar cuanto tiempo extra tarde). En
+cualquier situación intermedia, se interpola el puntaje.
+
+### Ejemplo:
+ - Min: 10
+ - Max: 50
+ - Tiempo: 10 seg.
+
+Si tarda:
+ - 0 segundos, obtendrá 50 puntos.
+ - 5 segundos, obtendrá 30 puntos.
+ - 10 o más segundos, obtendrá 10 puntos.
