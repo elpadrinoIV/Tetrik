@@ -57,9 +57,7 @@ Score = Class.extend({
 
     linesCompleted: function(lines) {
         var linesScore = gConfig.get("completed_lines_score")[lines];
-        console.log("linesCompleted: " + lines);
         if (linesScore) {
-            console.log("adding to score.. " + linesScore);
             this.add(linesScore);
         }
     },
