@@ -1,0 +1,13 @@
+- Pausa
+- Game over
+- Start
+- Levels (cada x lineas se aumenta de nivel)
+- Ocultar pieza fuera del tablero
+- multiplayer
+
+Power ups:
+- basura: random bloques, de 3 a 7 bloques en columnas distintas
+- agujeros: random agujeros, de 3 a 7 agujeros en distintos lugares
+- fixed: no deja rotar la pieza
+- lifter: levanta el piso de abajo
+- eliminar columna

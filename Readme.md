@@ -3,6 +3,7 @@
 ## Attack
  - frozen: congela durante un tiempo la pantalla
  - basura: random bloques, de 3 a 7 bloques en columnas distintas
+ - agujeros: random agujeros, de 3 a 7 agujeros en distintos lugares
  - thief: roba puntos al otro
  - upside-down: da vuelta el espacio de juego (las fichas caen para arriba)
  - invertir rotación: invierte el sentido de rotación de las piezas
