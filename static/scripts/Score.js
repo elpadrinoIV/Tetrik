@@ -45,7 +45,23 @@ Score = Class.extend({
 
     blockDropped: function(time) {
         var minScore = gConfig.get("block_min_score");
-        var maxScore = gConfig.get("block_min_score");
+        var maxScore = gConfig.get("block_max_score");
+        var minScoreTime = gConfig.get("min_score_time");
+
+        var m = (minScore - maxScore)/minScoreTime;
+
+        var blockScore = Math.max(minScore, Math.round(m*time + maxScore));
+
+        this.add(blockScore);
+    },
+
+    linesCompleted: function(lines) {
+        var linesScore = gConfig.get("completed_lines_score")[lines];
+        console.log("linesCompleted: " + lines);
+        if (linesScore) {
+            console.log("adding to score.. " + linesScore);
+            this.add(linesScore);
+        }
     },
 
     getScore: function() {

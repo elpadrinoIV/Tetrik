@@ -7,9 +7,13 @@ GameEngine = Class.extend({
 
     factory: {},
 
-    downSpeed: 4,
+    downSpeed: 2,
 
     accumulatedTikz: 0,
+
+    blockTime: 0,
+
+    totalTime: 0,
 
     currentBlock: null,
 
@@ -47,6 +51,8 @@ GameEngine = Class.extend({
         this.preLoadAssets();
 
         gInputEngine.setup();
+
+        gConfig.loadDefaults();
     },
 
     loadComplete: function() {
@@ -57,8 +63,12 @@ GameEngine = Class.extend({
         return new (this.factory[typename])();
     },
 
-    update: function () {
+    update: function (step) {
         self = gGameEngine;
+        
+        self.blockTime += step;
+
+        self.totalTime += step;
 
         if (self.nextBlock === null) {
             self.nextBlock = self.generateNextBlock();
@@ -113,7 +123,8 @@ GameEngine = Class.extend({
             } else {
                 self.tablero.applyBlock(self.currentBlock.shape, self.currentBlock.getPosition());
                 self.currentBlock = null;
-                self.score.add(17);
+                self.score.blockDropped(self.blockTime);
+                self.blockTime = 0;
             }
             
             self.accumulatedTikz = 0;
@@ -122,6 +133,7 @@ GameEngine = Class.extend({
         var completeRows = self.tablero.completeRows();
         if (completeRows.length > 0) {
             self.tablero.deleteRows(completeRows);
+            self.score.linesCompleted(completeRows.length);
         }
     },
 
