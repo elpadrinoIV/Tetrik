@@ -8,6 +8,7 @@ InputEngine = Class.extend({
         this.bind(68, 'move-left');
         this.bind(71, 'move-right');
         this.bind(70, 'move-down');
+        this.bind(80, 'pause');
         //gRenderEngine.canvas.addEventListener("mousemove", this.onMouseMove);
         //gRenderEngine.canvas.addEventListener("keydown", this.onKeyDown);
         window.addEventListener("keydown", this.onKeyDown);

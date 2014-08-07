@@ -23,6 +23,8 @@ GameEngine = Class.extend({
     
     score: null,
 
+    paused: false,
+
     preloadComplete: false,
 
     preLoadAssets: function() {
@@ -63,8 +65,21 @@ GameEngine = Class.extend({
         return new (this.factory[typename])();
     },
 
+    tooglePause: function() {
+        this.paused = !this.paused;
+    },
+
     update: function (step) {
         self = gGameEngine;
+
+        if (gInputEngine.actions['pause']) {
+            self.tooglePause();
+            gInputEngine.actions['pause'] = false;
+        }
+
+        if (self.paused) {
+            return;
+        }
         
         self.blockTime += step;
 
