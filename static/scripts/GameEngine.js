@@ -1,4 +1,85 @@
+var requestId = 0;
+var now = 0;
+var dt = 0;
+var last = 0;
+var step = 1.0/60.0;
+
+function loop(time) {
+    self = gGameEngine;
+    now = timestamp();
+    dt = dt + Math.min(1, (now - last) / 1000);
+
+    while (dt > step) {
+        dt = dt - step;
+        self.update(step);
+    }
+    
+    self.render(dt);
+    last = now;
+
+    if (self.gameOver) {
+        stop();
+    } else {
+        requestId = window.requestAnimationFrame(loop);
+    }
+}
+
+function start() {
+    now = 0;
+    dt = 0;
+    last = 0;
+
+    gGameEngine.setupComponents();
+    requestId = window.requestAnimationFrame(loop);
+}
+
+function stop() {
+    if (requestId) {
+        window.cancelAnimationFrame(requestId);
+    }
+    requestId = 0;
+}
+/*
+now: 0,
+dt: 0,
+last: 0,
+step: 1.0/60.0,
+
+
+loop: function() {
+    self = gGameEngine;
+    self.now = timestamp();
+    self.dt = self.dt + Math.min(1, (self.now - self.last) / 1000);
+
+    // console.log("now: " + self.now + ", dt: " + self.dt " + 
+    while (self.dt > self.step) {
+        self.dt = self.dt - self.step;
+        self.update(self.step);
+    }
+
+    self.render(self.dt);
+    self.last = self.now;
+    self.requestId = window.requestAnimationFrame(self.loop);
+},
+
+start: function() {
+    gGameEngine.setupComponents();
+    requestId = window.requestAnimationFrame(this.loop);
+},
+
+stop: function() {
+    if (this.requestId) {
+        console.log("Request ID: " + this.requestId);
+
+        window.cancelAnimationFrame(this.requestId);
+        this.requestId = undefined;
+    }
+},
+*/
+
 GameEngine = Class.extend({
+    requestId: undefined,
+
     tiledMap: null,
 
     entities: [],
@@ -25,7 +106,36 @@ GameEngine = Class.extend({
 
     paused: false,
 
+    gameOver: false,
+
     preloadComplete: false,
+
+    loadDefaults: function() {
+        this.requestId = undefined;
+        this.tiledMap = null;
+        this.entities = [];
+        this.possibleBlocks = ["IShape", "JShape", "LShape", "OShape", "SShape", "TShape", "ZShape"];
+        this.factory = {};
+        this.downSpeed = 2;
+        this.accumulatedTikz = 0;
+        this.blockTime = 0;
+        this.totalTime = 0;
+        this.currentBlock = null;
+        this.nextBlock = null;
+        this.tablero = null;
+        this.score = null;
+        this.paused = false;
+        this.gameOver = false;
+        this.preloadComplete = false;
+        this.factory['IShape'] = IShape;
+        this.factory['JShape'] = JShape;
+        this.factory['LShape'] = LShape;
+        this.factory['OShape'] = OShape;
+        this.factory['SShape'] = SShape;
+        this.factory['TShape'] = TShape;
+        this.factory['ZShape'] = ZShape;
+    },
+
 
     preLoadAssets: function() {
         var assets = new Array();
@@ -69,6 +179,12 @@ GameEngine = Class.extend({
         this.paused = !this.paused;
     },
 
+    finishGame: function() {
+        console.log("gameOver called");
+        this.gameOver = true;
+        stop();
+    },
+
     update: function (step) {
         self = gGameEngine;
 
@@ -77,7 +193,8 @@ GameEngine = Class.extend({
             gInputEngine.actions['pause'] = false;
         }
 
-        if (self.paused) {
+        if (self.paused || self.gameOver) {
+            console.log("Game over");
             return;
         }
         
@@ -136,10 +253,15 @@ GameEngine = Class.extend({
             if (self.tablero.blockFits(self.currentBlock.shape, newPos)) {
                 self.currentBlock.move({x:0, y:1});
             } else {
-                self.tablero.applyBlock(self.currentBlock.shape, self.currentBlock.getPosition());
-                self.currentBlock = null;
-                self.score.blockDropped(self.blockTime);
-                self.blockTime = 0;
+                if (!self.tablero.blockInsideTablero(self.currentBlock.shape, self.currentBlock.getPosition())) {
+                    self.finishGame();
+                    return;
+                } else {
+                    self.tablero.applyBlock(self.currentBlock.shape, self.currentBlock.getPosition());
+                    self.currentBlock = null;
+                    self.score.blockDropped(self.blockTime);
+                    self.blockTime = 0;
+                }
             }
             
             self.accumulatedTikz = 0;
@@ -182,6 +304,7 @@ GameEngine = Class.extend({
         gGameEngine.score.draw();
     },
 
+    /*
     run: function(options) {
         var now,
             dt = 0,
@@ -189,10 +312,10 @@ GameEngine = Class.extend({
             step = 1.0/options.fps,
             update = this.update,
             render = this.render;
+            requestId = this.requestId;
         
-        this.setupComponents();
 
-        function frame() {
+        function loop() {
             now = timestamp();
             dt = dt + Math.min(1, (now - last) /1000);
             while (dt > step) {
@@ -202,12 +325,60 @@ GameEngine = Class.extend({
 
             render(dt);
             last = now;
-            requestAnimationFrame(frame, options.canvas);
+            gGameEngine.requestId = requestAnimationFrame(loop, options.canvas);
         }
 
-        requestAnimationFrame(frame);
+        if (!gGameEngine.requestId) {
+            loop();
+        }
+        console.log(this);
     },
 
+    stop: function() {
+              console.log(this);
+        if (this.requestId) {
+            cancelAnimationFrame(this.requestId);
+            this.requestId = undefined;
+        }
+    },
+    */
+/*
+    now: 0,
+    dt: 0,
+    last: 0,
+    step: 1.0/60.0,
+
+
+    loop: function() {
+        self = gGameEngine;
+        self.now = timestamp();
+        self.dt = self.dt + Math.min(1, (self.now - self.last) / 1000);
+
+        // console.log("now: " + self.now + ", dt: " + self.dt " + 
+        while (self.dt > self.step) {
+            self.dt = self.dt - self.step;
+            self.update(self.step);
+        }
+
+        self.render(self.dt);
+        self.last = self.now;
+        self.requestId = window.requestAnimationFrame(self.loop);
+    },
+
+    start: function() {
+        this.setupComponents();
+        this.requestId = window.requestAnimationFrame(this.loop);
+    },
+
+    stop: function() {
+        if (this.requestId) {
+            console.log("Request ID: " + this.requestId);
+
+            window.cancelAnimationFrame(this.requestId);
+            this.requestId = undefined;
+        }
+    },
+*/
     setupComponents: function() {
         this.tablero.setup(this.tiledMap);
         var scorePosition = {

@@ -20,14 +20,25 @@
         <script src="static/scripts/Tablero.js"></script>
     </head>
     <body id="body">
+        <input type="button" value="New Game" onclick="newGame();" />
+        <input type="button" value="Stop" onclick="stop();" />
+        <input type="button" value="Stop2" onclick="gGameEngine.finishGame();" />
+        <br/>
         <canvas id="canvas"></canvas>
         <script>
-            gRenderEngine.setup();
-            gGameEngine.setup();
-            checkWait(gGameEngine.loadComplete, function() {
-                var options = {"fps": 60, "canvas": gRenderEngine.canvas, "update": gGameEngine.update, "render": gGameEngine.render};
-                gGameEngine.run(options);
-            });
+            function newGame() {
+                gRenderEngine.loadDefaults();
+                gGameEngine.loadDefaults();
+                gRenderEngine.setup();
+                gGameEngine.setup();
+                checkWait(gGameEngine.loadComplete, function() {
+                    var options = {"fps": 60, "canvas": gRenderEngine.canvas, "update": gGameEngine.update, "render": gGameEngine.render};
+                    //gGameEngine.run(options);
+                    //gGameEngine.start();
+                    start();
+                });
+            }
+
         </script>
     </body>
 </html>

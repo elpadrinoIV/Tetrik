@@ -300,10 +300,3 @@ ZShape = Block.extend({
     },
 });
 
-gGameEngine.factory['IShape'] = IShape;
-gGameEngine.factory['JShape'] = JShape;
-gGameEngine.factory['LShape'] = LShape;
-gGameEngine.factory['OShape'] = OShape;
-gGameEngine.factory['SShape'] = SShape;
-gGameEngine.factory['TShape'] = TShape;
-gGameEngine.factory['ZShape'] = ZShape;

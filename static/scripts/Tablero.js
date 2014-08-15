@@ -70,6 +70,22 @@ Tablero = Class.extend({
         return thereIsSpace;
     },
 
+    blockInsideTablero: function(block, position) {
+        var inside_tablero = true;
+        for (var f = 0; f < block.length; f++) {
+            for (var c = 0; c < block[f].length; c++) {
+                var x_final = position.x + c;
+                var y_final = position.y + f;
+
+                if (block[f][c] !== 0 && (y_final >= this.size.height || y_final < 0 || x_final < 0 || x_final >= this.size.width) ){
+                    inside_tablero = false;
+                    break;
+                }
+            }
+        }
+        return inside_tablero;
+    },
+
     completeRows: function() {
         var completeRows = [];
         for (var f = 0; f < this.tablero.length; f++) {

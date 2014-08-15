@@ -6,6 +6,15 @@ RenderEngine = Class.extend({
         "w": 23.8,
         "h": 23.8
     },
+    
+    loadDefaults: function() {
+        this.canvas = null;
+        this.context = null;
+        this.blockSize = {
+            "w": 23.8,
+            "h": 23.8
+        }
+    },
 
     setup: function() {
         this.canvas = document.getElementById('canvas');

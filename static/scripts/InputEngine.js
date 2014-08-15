@@ -3,6 +3,11 @@ InputEngine = Class.extend({
 
     actions: {},
 
+    loadDefaults: function() {
+        this.bindings = {};
+        this.actions = {};
+    },
+
     setup: function() {
         this.bind(81, 'rotate');
         this.bind(68, 'move-left');
