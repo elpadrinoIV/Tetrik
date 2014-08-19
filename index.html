@@ -21,8 +21,7 @@
     </head>
     <body id="body">
         <input type="button" value="New Game" onclick="newGame();" />
-        <input type="button" value="Stop" onclick="stop();" />
-        <input type="button" value="Stop2" onclick="gGameEngine.finishGame();" />
+        <input type="button" value="Stop" onclick="gGameEngine.stop();" />
         <br/>
         <canvas id="canvas"></canvas>
         <script>
@@ -34,8 +33,8 @@
                 checkWait(gGameEngine.loadComplete, function() {
                     var options = {"fps": 60, "canvas": gRenderEngine.canvas, "update": gGameEngine.update, "render": gGameEngine.render};
                     //gGameEngine.run(options);
-                    //gGameEngine.start();
-                    start();
+                    gGameEngine.start();
+                    //start();
                 });
             }
 

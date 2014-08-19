@@ -1,82 +1,3 @@
-var requestId = 0;
-var now = 0;
-var dt = 0;
-var last = 0;
-var step = 1.0/60.0;
-
-function loop(time) {
-    self = gGameEngine;
-    now = timestamp();
-    dt = dt + Math.min(1, (now - last) / 1000);
-
-    while (dt > step) {
-        dt = dt - step;
-        self.update(step);
-    }
-    
-    self.render(dt);
-    last = now;
-
-    if (self.gameOver) {
-        stop();
-    } else {
-        requestId = window.requestAnimationFrame(loop);
-    }
-}
-
-function start() {
-    now = 0;
-    dt = 0;
-    last = 0;
-
-    gGameEngine.setupComponents();
-    requestId = window.requestAnimationFrame(loop);
-}
-
-function stop() {
-    if (requestId) {
-        window.cancelAnimationFrame(requestId);
-    }
-    requestId = 0;
-}
-/*
-now: 0,
-dt: 0,
-last: 0,
-step: 1.0/60.0,
-
-
-loop: function() {
-    self = gGameEngine;
-    self.now = timestamp();
-    self.dt = self.dt + Math.min(1, (self.now - self.last) / 1000);
-
-    // console.log("now: " + self.now + ", dt: " + self.dt " + 
-    while (self.dt > self.step) {
-        self.dt = self.dt - self.step;
-        self.update(self.step);
-    }
-
-    self.render(self.dt);
-    self.last = self.now;
-    self.requestId = window.requestAnimationFrame(self.loop);
-},
-
-start: function() {
-    gGameEngine.setupComponents();
-    requestId = window.requestAnimationFrame(this.loop);
-},
-
-stop: function() {
-    if (this.requestId) {
-        console.log("Request ID: " + this.requestId);
-
-        window.cancelAnimationFrame(this.requestId);
-        this.requestId = undefined;
-    }
-},
-*/
-
 GameEngine = Class.extend({
     requestId: undefined,
 
@@ -110,6 +31,16 @@ GameEngine = Class.extend({
 
     preloadComplete: false,
 
+    requestId: 0,
+
+    now: 0,
+    
+    dt: 0,
+
+    last: 0,
+
+    step: 1.0/60.0,
+
     loadDefaults: function() {
         this.requestId = undefined;
         this.tiledMap = null;
@@ -134,6 +65,11 @@ GameEngine = Class.extend({
         this.factory['SShape'] = SShape;
         this.factory['TShape'] = TShape;
         this.factory['ZShape'] = ZShape;
+        this.requestId = 0;
+        this.now = 0;
+        this.dt = 0;
+        this.last = 0;
+        this.step = 1.0/60.0;
     },
 
 
@@ -180,7 +116,6 @@ GameEngine = Class.extend({
     },
 
     finishGame: function() {
-        console.log("gameOver called");
         this.gameOver = true;
         stop();
     },
@@ -194,7 +129,6 @@ GameEngine = Class.extend({
         }
 
         if (self.paused || self.gameOver) {
-            console.log("Game over");
             return;
         }
         
@@ -342,43 +276,43 @@ GameEngine = Class.extend({
         }
     },
     */
-/*
-    now: 0,
-    dt: 0,
-    last: 0,
-    step: 1.0/60.0,
 
-
-    loop: function() {
+    loop: function(time) {
         self = gGameEngine;
         self.now = timestamp();
         self.dt = self.dt + Math.min(1, (self.now - self.last) / 1000);
 
-        // console.log("now: " + self.now + ", dt: " + self.dt " + 
         while (self.dt > self.step) {
             self.dt = self.dt - self.step;
             self.update(self.step);
         }
-
+        
         self.render(self.dt);
         self.last = self.now;
-        self.requestId = window.requestAnimationFrame(self.loop);
+
+        if (self.gameOver) {
+            self.stop();
+        } else {
+            self.requestId = window.requestAnimationFrame(self.loop);
+        }
     },
 
     start: function() {
+        this.now = 0;
+        this.dt = 0;
+        this.last = 0;
+
         this.setupComponents();
         this.requestId = window.requestAnimationFrame(this.loop);
     },
 
     stop: function() {
         if (this.requestId) {
-            console.log("Request ID: " + this.requestId);
-
             window.cancelAnimationFrame(this.requestId);
-            this.requestId = undefined;
         }
+        this.requestId = undefined;
     },
-*/
+
     setupComponents: function() {
         this.tablero.setup(this.tiledMap);
         var scorePosition = {
