@@ -9,13 +9,17 @@ GameEngine = Class.extend({
 
     factory: {},
 
-    downSpeed: 2,
+    downSpeed: 1,
+
+    tikzPerDownSpeed: 4,
 
     accumulatedTikz: 0,
 
     blockTime: 0,
 
     totalTime: 0,
+
+    linesCompleted: 0,
 
     currentBlock: null,
 
@@ -47,10 +51,12 @@ GameEngine = Class.extend({
         this.entities = [];
         this.possibleBlocks = ["IShape", "JShape", "LShape", "OShape", "SShape", "TShape", "ZShape"];
         this.factory = {};
-        this.downSpeed = 2;
+        this.downSpeed = 1;
+        this.tikzPerDownSpeed = 4;
         this.accumulatedTikz = 0;
         this.blockTime = 0;
         this.totalTime = 0;
+        this.linesCompleted = 0;
         this.currentBlock = null;
         this.nextBlock = null;
         this.tablero = null;
@@ -161,7 +167,7 @@ GameEngine = Class.extend({
             var newPos = self.currentBlock.getPosition();
             newPos.x += 1;
             if (self.tablero.blockFits(self.currentBlock.shape, newPos)) {
-                self.currentBlock.move({x:1, y: 0});
+                self.currentBlock.move({x: 1, y: 0});
             }
 
             gInputEngine.actions['move-right'] = false;
@@ -175,7 +181,7 @@ GameEngine = Class.extend({
             gInputEngine.actions['rotate'] = false;
         }
 
-        self.accumulatedTikz += self.downSpeed;
+        self.accumulatedTikz += self.downSpeed*self.tikzPerDownSpeed;
         if (gInputEngine.actions['move-down']) {
             self.accumulatedTikz += 20;
         }
@@ -205,6 +211,8 @@ GameEngine = Class.extend({
         if (completeRows.length > 0) {
             self.tablero.deleteRows(completeRows);
             self.score.linesCompleted(completeRows.length);
+            self.linesCompleted += completeRows.length;
+            self.downSpeed = Math.floor(self.linesCompleted / 10) + 1;
         }
     },
 
