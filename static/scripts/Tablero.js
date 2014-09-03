@@ -122,14 +122,14 @@ Tablero = Class.extend({
         return this.tablero;
     },
 
-    draw: function() {
-        this.areaTablero.draw(gRenderEngine.context);
+    draw: function(offset) {
+        this.areaTablero.draw(gRenderEngine.context, offset);
 
         for (var row = 0; row < this.tablero.length; row++) {
             for (var column = 0; column < this.tablero[row].length; column++) {
                 if (this.tablero[row][column] !== 0) {
-                    xWorld = this.areaTablero.getOffsetTablero().x + column*gRenderEngine.blockSize.w + gRenderEngine.blockSize.w*0.5;
-                    yWorld = this.areaTablero.getOffsetTablero().y + row*gRenderEngine.blockSize.h + gRenderEngine.blockSize.h*0.5;
+                    xWorld = offset.x + this.areaTablero.getOffsetTablero().x + column*gRenderEngine.blockSize.w + gRenderEngine.blockSize.w*0.5;
+                    yWorld = offset.y + this.areaTablero.getOffsetTablero().y + row*gRenderEngine.blockSize.h + gRenderEngine.blockSize.h*0.5;
 
                     var blockImg = "c" + this.tablero[row][column] + ".png";
  //                   console.log("(" + xWorld +", " + yWorld + ") - " + this.blockSize.w + "x" + this.blockSize.h);

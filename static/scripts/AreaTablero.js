@@ -9,8 +9,8 @@ AreaTablero = Class.extend({
         this.tiledMap = tiledMap;
     },
 
-    draw: function(context) {
-        this.tiledMap.draw(context);
+    draw: function(context, offset) {
+        this.tiledMap.draw(context, offset);
     },
 
     getOffsetTablero: function() {

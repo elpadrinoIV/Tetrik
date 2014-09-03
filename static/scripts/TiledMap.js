@@ -141,7 +141,7 @@ var TiledMap = Class.extend({
         return packet;
     },
 
-    draw: function(context) {
+    draw: function(context, offset) {
         if (!this.fullyLoaded) {
             console.log("not fullyLoaded");
             return;
@@ -162,8 +162,8 @@ var TiledMap = Class.extend({
 
                 var packet = this.getTilePacket(data[i]);
 
-                var worldX = Math.floor(i % this.numXTiles) * this.tileSize.w;
-                var worldY = Math.floor(i / this.numXTiles) * this.tileSize.h + this.tileSize.h - packet.h;
+                var worldX = offset.x + Math.floor(i % this.numXTiles) * this.tileSize.w;
+                var worldY = offset.y + Math.floor(i / this.numXTiles) * this.tileSize.h + this.tileSize.h - packet.h;
 
                 context.drawImage(packet.img,
                                   packet.x,

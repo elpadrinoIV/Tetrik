@@ -42,8 +42,8 @@ Player = Class.extend({
     setup: function(tiledMap) {
         this.tablero.setup(tiledMap);
         var scorePosition = {
-            "x": tiledMap.getObjects().score.x,
-            "y": tiledMap.getObjects().score.y,
+            "x": this.topLeftCorner.x + tiledMap.getObjects().score.x,
+            "y": this.topLeftCorner.y + tiledMap.getObjects().score.y,
         };
         var scoreSize = {
             "w": tiledMap.getObjects().score.w,
@@ -77,7 +77,7 @@ Player = Class.extend({
     },
 
     render: function() {
-        this.tablero.draw();
+        this.tablero.draw(this.topLeftCorner);
         if (this.currentBlock !== null) {
             this.currentBlock.draw();
         }
