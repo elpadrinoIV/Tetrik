@@ -9,25 +9,36 @@ GameEngine = Class.extend({
 
     factory: {},
 
-    downSpeed: 1,
+    numPlayers: 1,
 
-    tikzPerDownSpeed: 4,
+    players: [],
 
-    accumulatedTikz: 0,
+    playersPositions: [
+                        { 'x': 0, 'y': 0 },
+                        {'x': 550, 'y': 0},
+                        {'x': 0, 'y': 550},
+                        {'x': 550, 'y': 550}
+                      ],
 
-    blockTime: 0,
+    // downSpeed: 1,
 
-    totalTime: 0,
+    // tikzPerDownSpeed: 4,
 
-    linesCompleted: 0,
+    // accumulatedTikz: 0,
 
-    currentBlock: null,
+    // blockTime: 0,
 
-    nextBlock: null,
+    // totalTime: 0,
 
-    tablero: null,
+    // linesCompleted: 0,
+
+    // currentBlock: null,
+
+    // nextBlock: null,
+
+    // tablero: null,
     
-    score: null,
+    // score: null,
 
     paused: false,
 
@@ -51,16 +62,16 @@ GameEngine = Class.extend({
         this.entities = [];
         this.possibleBlocks = ["IShape", "JShape", "LShape", "OShape", "SShape", "TShape", "ZShape"];
         this.factory = {};
-        this.downSpeed = 1;
-        this.tikzPerDownSpeed = 4;
-        this.accumulatedTikz = 0;
-        this.blockTime = 0;
-        this.totalTime = 0;
-        this.linesCompleted = 0;
-        this.currentBlock = null;
-        this.nextBlock = null;
-        this.tablero = null;
-        this.score = null;
+        // this.downSpeed = 1;
+        // this.tikzPerDownSpeed = 4;
+        // this.accumulatedTikz = 0;
+        // this.blockTime = 0;
+        // this.totalTime = 0;
+        // this.linesCompleted = 0;
+        // this.currentBlock = null;
+        // this.nextBlock = null;
+        // this.tablero = null;
+        // this.score = null;
         this.paused = false;
         this.gameOver = false;
         this.preloadComplete = false;
@@ -76,6 +87,9 @@ GameEngine = Class.extend({
         this.dt = 0;
         this.last = 0;
         this.step = 1.0/60.0;
+        this.players = [];
+        this.numPlayers = 2;
+        this.playersPositions = [{ 'x': 0, 'y': 0 }, {'x': 550, 'y': 0}, {'x': 0, 'y': 550}, {'x': 550, 'y': 550}];
     },
 
 
@@ -94,19 +108,22 @@ GameEngine = Class.extend({
     setup: function() {
         // cargar todo
 
-        this.tablero = new Tablero(20, 10);
         // this.tablero.loadSpecs('static/images/mano/tablero.json');
 
         this.tiledMap = new TiledMap();
         this.tiledMap.load('static/images/mano/tablero.json');
-
-        this.score = new Score();
 
         this.preLoadAssets();
 
         gInputEngine.setup();
 
         gConfig.loadDefaults();
+
+        for (var i = 1; i <= this.numPlayers; i++) {
+            var player = new Player(i);
+            player.setPosition(this.playersPositions[i].x, this.playersPositions[i].y);
+            this.players.push(player);
+        }
     },
 
     loadComplete: function() {
@@ -121,9 +138,16 @@ GameEngine = Class.extend({
         this.paused = !this.paused;
     },
 
-    finishGame: function() {
-        this.gameOver = true;
-        stop();
+    checkEndGame: function() {
+        var all_have_lost = true;
+        for (var playerNumber = 0; playerNumber < self.numPlayers; playerNumber++) {
+            if (!this.players[playerNumber].gameOver) {
+                all_have_lost = false;
+                break;
+            }
+        }
+
+        return all_have_lost;
     },
 
     update: function (step) {
@@ -137,95 +161,100 @@ GameEngine = Class.extend({
         if (self.paused || self.gameOver) {
             return;
         }
-        
-        self.blockTime += step;
 
-        self.totalTime += step;
+        for (var playerNumber = 0; playerNumber < self.numPlayers; playerNumber++) {
+            var player = self.players[playerNumber];
 
-        if (self.nextBlock === null) {
-            self.nextBlock = self.generateNextBlock();
-        }
-
-        if (self.currentBlock === null) {
-            self.currentBlock = self.nextBlock;
-            self.currentBlock.setup(self.tablero.areaTablero.getOffsetTablero(), gRenderEngine.blockSize);
-            self.currentBlock.setPosition(4, -4);
-
-            self.nextBlock = self.generateNextBlock();
-        }
-
-        if (gInputEngine.actions['move-left']) {
-            var newPos = self.currentBlock.getPosition();
-            newPos.x -= 1;
-            if (self.tablero.blockFits(self.currentBlock.shape, newPos)) {
-                self.currentBlock.move({x:-1, y: 0});
-            }
-            gInputEngine.actions['move-left'] = false;
-        }
-
-        if (gInputEngine.actions['move-right']) {
-            var newPos = self.currentBlock.getPosition();
-            newPos.x += 1;
-            if (self.tablero.blockFits(self.currentBlock.shape, newPos)) {
-                self.currentBlock.move({x: 1, y: 0});
+            if (player.gameOver) {
+                continue;
             }
 
-            gInputEngine.actions['move-right'] = false;
-        }
+            player.blockTime += step;
 
-        if (gInputEngine.actions['rotate']) {
-            var newShape = self.currentBlock.rotations[self.currentBlock.nextRotation('counterclockwise')];
-            if (self.tablero.blockFits(newShape, self.currentBlock.getPosition())) {
-                self.currentBlock.rotate('counterclockwise');
+            player.totalTime += step;
+
+            if (player.nextBlock === null) {
+                player.setNextBlock(self.generateNextBlock());
             }
-            gInputEngine.actions['rotate'] = false;
-        }
 
-        self.accumulatedTikz += self.downSpeed*self.tikzPerDownSpeed;
-        if (gInputEngine.actions['move-down']) {
-            self.accumulatedTikz += 20;
-        }
+            if (player.currentBlock === null) {
+                player.changeToNextBlock();
+                player.setNextBlock(self.generateNextBlock());
+            }
 
-        if (self.accumulatedTikz >= 100) {
-            var newPos = self.currentBlock.getPosition();
-            newPos.y += 1;
-            
-            if (self.tablero.blockFits(self.currentBlock.shape, newPos)) {
-                self.currentBlock.move({x:0, y:1});
-            } else {
-                if (!self.tablero.blockInsideTablero(self.currentBlock.shape, self.currentBlock.getPosition())) {
-                    self.finishGame();
-                    return;
-                } else {
-                    self.tablero.applyBlock(self.currentBlock.shape, self.currentBlock.getPosition());
-                    self.currentBlock = null;
-                    self.score.blockDropped(self.blockTime);
-                    self.blockTime = 0;
+            if (gInputEngine.actions['p' + playerNumber +'-move-left']) {
+                var newPos = player.currentBlock.getPosition();
+                newPos.x -= 1;
+                if (player.tablero.blockFits(player.currentBlock.shape, newPos)) {
+                    player.currentBlock.move({x:-1, y: 0});
                 }
+                gInputEngine.actions['p' + playerNumber + '-move-left'] = false;
             }
-            
-            self.accumulatedTikz = 0;
-        }
 
-        var completeRows = self.tablero.completeRows();
-        if (completeRows.length > 0) {
-            self.tablero.deleteRows(completeRows);
-            self.score.linesCompleted(completeRows.length);
-            self.linesCompleted += completeRows.length;
-            self.downSpeed = Math.floor(self.linesCompleted / 10) + 1;
+            if (gInputEngine.actions['p' + playerNumber + '-move-right']) {
+                var newPos = player.currentBlock.getPosition();
+                newPos.x += 1;
+                if (player.tablero.blockFits(player.currentBlock.shape, newPos)) {
+                    player.currentBlock.move({x: 1, y: 0});
+                }
+
+                gInputEngine.actions['p' + playerNumber + '-move-right'] = false;
+            }
+
+            if (gInputEngine.actions['p' + playerNumber + '-rotate']) {
+                var newShape = player.currentBlock.rotations[player.currentBlock.nextRotation('counterclockwise')];
+                if (player.tablero.blockFits(newShape, player.currentBlock.getPosition())) {
+                    player.currentBlock.rotate('counterclockwise');
+                }
+                gInputEngine.actions['p' + playerNumber + '-rotate'] = false;
+            }
+
+            player.accumulatedTikz += player.downSpeed*player.tikzPerDownSpeed;
+
+            if (gInputEngine.actions['p' + playerNumber + '-move-down']) {
+                player.accumulatedTikz += 20;
+            }
+
+            if (player.accumulatedTikz >= 100) {
+                var newPos = player.currentBlock.getPosition();
+                newPos.y += 1;
+
+                if (player.tablero.blockFits(player.currentBlock.shape, newPos)) {
+                    player.currentBlock.move({x:0, y:1});
+                } else {
+                    if (!player.tablero.blockInsideTablero(player.currentBlock.shape, player.currentBlock.getPosition())) {
+                        player.finishGame();
+                        if (self.checkEndGame()) {
+                            self.gameOver = true;
+                            self.stop();
+                        }
+                        continue;
+                    } else {
+                        player.tablero.applyBlock(player.currentBlock.shape, player.currentBlock.getPosition());
+                        player.currentBlock = null;
+                        player.score.blockDropped(player.blockTime);
+                        player.blockTime = 0;
+                    }
+                }
+
+                player.accumulatedTikz = 0;
+            }
+
+            var completeRows = player.tablero.completeRows();
+            if (completeRows.length > 0) {
+                player.tablero.deleteRows(completeRows);
+                player.score.linesCompleted(completeRows.length);
+                player.linesCompleted += completeRows.length;
+                player.downSpeed = Math.floor(player.linesCompleted / 10) + 1;
+            }
         }
     },
 
     generateNextBlock: function() {
         var nextBlock = self.spawnEntity(this.possibleBlocks[Math.floor(Math.random() * this.possibleBlocks.length)]);
-        var offset = this.tablero.areaTablero.getOffsetNextBlock();
-        var position = {"x": 0, "y": 0};
-        position.x = offset.x + offset.w/2 - (nextBlock.boundingBox.right - nextBlock.boundingBox.left)*gRenderEngine.blockSize.w/2 - nextBlock.boundingBox.left*gRenderEngine.blockSize.w;
-        position.y = offset.y + offset.h/2 - (nextBlock.boundingBox.bottom - nextBlock.boundingBox.top)*gRenderEngine.blockSize.h/2 - nextBlock.boundingBox.top*gRenderEngine.blockSize.h;
 
         nextBlock.setup({"x": 0, "y": 0}, gRenderEngine.blockSize);
 
-        nextBlock.worldPosition = position;
         return nextBlock;
     },
 
@@ -234,56 +263,10 @@ GameEngine = Class.extend({
                 
         self = gGameEngine;
 
-        gGameEngine.tablero.draw();
-        if (self.currentBlock !== null) {
-            self.currentBlock.draw();
-        }
-
-        if (self.nextBlock !== null) {
-            self.nextBlock.draw();
-        }
-
-        gGameEngine.score.draw();
-    },
-
-    /*
-    run: function(options) {
-        var now,
-            dt = 0,
-            last = timestamp(),
-            step = 1.0/options.fps,
-            update = this.update,
-            render = this.render;
-            requestId = this.requestId;
-        
-
-        function loop() {
-            now = timestamp();
-            dt = dt + Math.min(1, (now - last) /1000);
-            while (dt > step) {
-                dt = dt - step;
-                update(step);
-            }
-
-            render(dt);
-            last = now;
-            gGameEngine.requestId = requestAnimationFrame(loop, options.canvas);
-        }
-
-        if (!gGameEngine.requestId) {
-            loop();
-        }
-        console.log(this);
-    },
-
-    stop: function() {
-              console.log(this);
-        if (this.requestId) {
-            cancelAnimationFrame(this.requestId);
-            this.requestId = undefined;
+        for (var playerNumber = 0; playerNumber < self.numPlayers; playerNumber++) {
+            self.players[playerNumber].render();
         }
     },
-    */
 
     loop: function(time) {
         self = gGameEngine;
@@ -322,17 +305,10 @@ GameEngine = Class.extend({
     },
 
     setupComponents: function() {
-        this.tablero.setup(this.tiledMap);
-        var scorePosition = {
-            "x": this.tiledMap.getObjects().score.x,
-            "y": this.tiledMap.getObjects().score.y,
-        };
-        var scoreSize = {
-            "w": this.tiledMap.getObjects().score.w,
-            "h": this.tiledMap.getObjects().score.h,
-        };
+        for (var playerNumber = 0; playerNumber < this.numPlayers; playerNumber++) {
+            this.players[playerNumber].setup(this.tiledMap);
+        }
 
-        this.score.setup(scorePosition, scoreSize, 7);
     },
 });
 

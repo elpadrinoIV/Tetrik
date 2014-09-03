@@ -9,10 +9,10 @@ InputEngine = Class.extend({
     },
 
     setup: function() {
-        this.bind(81, 'rotate');
-        this.bind(68, 'move-left');
-        this.bind(71, 'move-right');
-        this.bind(70, 'move-down');
+        this.bind(81, 'p1-rotate');
+        this.bind(68, 'p1-move-left');
+        this.bind(71, 'p1-move-right');
+        this.bind(70, 'p1-move-down');
         this.bind(80, 'pause');
         //gRenderEngine.canvas.addEventListener("mousemove", this.onMouseMove);
         //gRenderEngine.canvas.addEventListener("keydown", this.onKeyDown);
