@@ -66,7 +66,7 @@ Player = Class.extend({
         this.currentBlock.setPosition(4, -4);
     },
 
-    setNextBlock: funtion(nextBlock) {
+    setNextBlock: function(nextBlock) {
         var offset = this.tablero.areaTablero.getOffsetNextBlock();
         var position = {"x": 0, "y": 0};
         position.x = this.topLeftCorner.x + offset.x + offset.w/2 - (nextBlock.boundingBox.right - nextBlock.boundingBox.left)*gRenderEngine.blockSize.w/2 - nextBlock.boundingBox.left*gRenderEngine.blockSize.w;
@@ -83,7 +83,7 @@ Player = Class.extend({
         }
 
         if (this.nextBlock !== null) {
-            thsi.nextBlock.draw();
+            this.nextBlock.draw();
         }
 
         this.score.draw();

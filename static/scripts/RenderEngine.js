@@ -21,7 +21,7 @@ RenderEngine = Class.extend({
         this.context = this.canvas.getContext('2d');
         //this.canvas.width = 22*this.mult;
         //this.canvas.height = 22*this.mult;
-        this.canvas.width = 550;
+        this.canvas.width = 1100;
         this.canvas.height = 550;
         this.canvas.style.border = "1px solid #000000";
     }

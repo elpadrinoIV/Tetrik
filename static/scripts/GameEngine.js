@@ -9,7 +9,7 @@ GameEngine = Class.extend({
 
     factory: {},
 
-    numPlayers: 1,
+    numPlayers: 2,
 
     players: [],
 
@@ -121,7 +121,7 @@ GameEngine = Class.extend({
 
         for (var i = 1; i <= this.numPlayers; i++) {
             var player = new Player(i);
-            player.setPosition(this.playersPositions[i].x, this.playersPositions[i].y);
+            player.setPosition(this.playersPositions[i-1].x, this.playersPositions[i-1].y);
             this.players.push(player);
         }
     },
@@ -162,8 +162,8 @@ GameEngine = Class.extend({
             return;
         }
 
-        for (var playerNumber = 0; playerNumber < self.numPlayers; playerNumber++) {
-            var player = self.players[playerNumber];
+        for (var playerNumber = 1; playerNumber <= self.numPlayers; playerNumber++) {
+            var player = self.players[playerNumber - 1];
 
             if (player.gameOver) {
                 continue;
