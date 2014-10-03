@@ -9,7 +9,8 @@ config["My tests"] = {
         "static/scripts/GameEngine.js",
         "static/scripts/Block.js",
         "static/scripts/Score.js",
-        "static/scripts/Tablero.js"
+        "static/scripts/Tablero.js",
+        "static/scripts/GarbageGenerator.js"
         ],
     tests: [
         "test/*-test.js"

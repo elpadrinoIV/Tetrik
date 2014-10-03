@@ -18,7 +18,7 @@ buster.testCase("Power Up basura", {
 
         tablero.applyBlock(f, pos);
 
-        var powerup = new Basura();
+        var powerup = new GarbageGenerator();
         powerup.fill(tablero, 1, 1);
 
         assert.equals(tablero.getTablero(), tableroEsperado);
@@ -38,7 +38,7 @@ buster.testCase("Power Up basura", {
 
         tablero.applyBlock(f, pos);
 
-        var powerup = new Basura();
+        var powerup = new GarbageGenerator();
         powerup.fill(tablero, 1, 2);
 
         assert.equals(tablero.getTablero(), tableroEsperado);
@@ -58,7 +58,7 @@ buster.testCase("Power Up basura", {
 
         tablero.applyBlock(f, pos);
 
-        var powerup = new Basura();
+        var powerup = new GarbageGenerator();
         powerup.fill(tablero, 2, 1);
 
         assert.equals(tablero.getTablero(), tableroEsperado);
@@ -78,7 +78,7 @@ buster.testCase("Power Up basura", {
 
         tablero.applyBlock(f, pos);
 
-        var powerup = new Basura();
+        var powerup = new GarbageGenerator();
         powerup.fill(tablero, 1, 3);
 
         assert.equals(tablero.getTablero(), tableroEsperado);
@@ -106,7 +106,7 @@ buster.testCase("Power Up basura", {
 
         tablero.applyBlock(f, pos);
 
-        var powerup = new Basura();
+        var powerup = new GarbageGenerator();
         powerup.fill(tablero, 1, 3);
 
         assert(tablero.getTablero() == tableroEsperado1 ||
@@ -141,7 +141,7 @@ buster.testCase("Power Up basura", {
 
         tablero.applyBlock(f, pos);
 
-        var powerup = new Basura();
+        var powerup = new GarbageGenerator();
         powerup.fill(tablero, 1, 1);
 
         assert(tablero.getTablero() == tableroEsperado1 ||
@@ -176,7 +176,7 @@ buster.testCase("Power Up basura", {
 
         tablero.applyBlock(f, pos);
 
-        var powerup = new Basura();
+        var powerup = new GarbageGenerator();
         powerup.fill(tablero, 1, 1);
 
         assert(tablero.getTablero() == tableroEsperado1 ||
