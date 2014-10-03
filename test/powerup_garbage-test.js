@@ -4,6 +4,28 @@ var refute = buster.referee.refute;
 
 
 buster.testCase("Power Up basura", {
+    "Garbage position for column": function() {
+        var tablero = new Tablero(4, 5);
+        var shape = [ [0, 1, 0, 0, 0],
+                      [0, 1, 1, 0, 0],
+                      [0, 0, 0, 1, 0],
+                      [0, 1, 1, 1, 1] ];
+        var pos = {x: 0, y: 0};
+
+        tablero.applyBlock(shape, pos);
+
+        var expectedPositions = [ -1, -1, 0, 1, 2 ];
+
+        var powerup = new GarbageGenerator();
+
+        for (var column = 0; column < 5; column++) {
+            var row = powerup.posibleRowPosition(tablero, column);
+            assert.equals(row, expectedPositions[column]);    
+        }
+
+    },
+
+        /*
     "Unique position": function() {
         var tablero = new Tablero(3, 3);
         var f =  [ [0, 0, 1],
@@ -183,4 +205,5 @@ buster.testCase("Power Up basura", {
                tablero.getTablero() == tableroEsperado2 ||
                tablero.getTablero() == tableroEsperado3 );
     },
+    */
 });
