@@ -10,8 +10,26 @@ GarbageGenerator = Class.extend({
         var block = [ [1] ];
         
         for (var current_row = 0; current_row <= tablero.size.height; current_row++) {
-            if (tablero.blockFits
+            if (tablero.blockFits(block, {'x': column, 'y': current_row})) {
+                row = current_row;
+            } else {
+                break;
+            }
         }
-        return 0;
+
+        if (row != -1) {
+            var row_complete = true;
+            for (var c = 0; c < tablero.tablero[row].length; c++) {
+                if (tablero.tablero[row][c] === 0 && c != column) {
+                    row_complete = false;
+                    break;
+                }
+            }
+            if (row_complete) {
+                row = -1;
+            }
+        }
+
+        return row;
     }
 });
