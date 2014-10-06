@@ -25,7 +25,6 @@ buster.testCase("Power Up basura", {
 
     },
 
-        /*
     "Unique position": function() {
         var tablero = new Tablero(3, 3);
         var f =  [ [0, 0, 1],
@@ -46,6 +45,7 @@ buster.testCase("Power Up basura", {
         assert.equals(tablero.getTablero(), tableroEsperado);
     },
 
+    /*
     "Unique position and not enough space": function() {
         var tablero = new Tablero(3, 3);
         var f =  [ [0, 0, 1],
