@@ -3,8 +3,11 @@ var config = module.exports;
 config["My tests"] = {
     rootPath: "../",
     environment: "node",
-    sources: [
+    libs: [ 
         "static/scripts/core.js",
+        "static/scripts/utils.js"
+        ],
+    sources: [
         "static/scripts/Config.js",
         "static/scripts/GameEngine.js",
         "static/scripts/Block.js",

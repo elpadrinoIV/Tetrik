@@ -2,7 +2,6 @@ var buster = require("buster");
 var assert = buster.referee.assert;
 var refute = buster.referee.refute;
 
-
 buster.testCase("Power Up basura", {
     "Garbage position for column": function() {
         var tablero = new Tablero(4, 5);
@@ -45,7 +44,6 @@ buster.testCase("Power Up basura", {
         assert.equals(tablero.getTablero(), tableroEsperado);
     },
 
-    /*
     "Unique position and not enough space": function() {
         var tablero = new Tablero(3, 3);
         var f =  [ [0, 0, 1],
@@ -87,7 +85,7 @@ buster.testCase("Power Up basura", {
     },
 
     "Unique position several blocks": function() {
-        var tablero = new Tablero(4, 3);
+        var tablero = new Tablero(3, 4);
         var f =  [ [0, 0, 0, 0],
                    [0, 1, 1, 1],
                    [0, 1, 1, 1] ];
@@ -107,7 +105,7 @@ buster.testCase("Power Up basura", {
     },
 
     "Several blocks": function() {
-        var tablero = new Tablero(4, 3);
+        var tablero = new Tablero(3, 4);
         var f =  [ [0, 0, 0, 0],
                    [0, 1, 1, 1],
                    [0, 1, 1, 1] ];
@@ -129,11 +127,11 @@ buster.testCase("Power Up basura", {
         tablero.applyBlock(f, pos);
 
         var powerup = new GarbageGenerator();
-        powerup.fill(tablero, 1, 3);
+        powerup.fill(tablero, 1, 2);
 
-        assert(tablero.getTablero() == tableroEsperado1 ||
-               tablero.getTablero() == tableroEsperado2 ||
-               tablero.getTablero() == tableroEsperado3 );
+        assert(tablero.getTablero().toString() == tableroEsperado1.toString() ||
+               tablero.getTablero().toString() == tableroEsperado2.toString() ||
+               tablero.getTablero().toString() == tableroEsperado3.toString() );
     },
 
     "Uneven layout": function() {
@@ -166,9 +164,9 @@ buster.testCase("Power Up basura", {
         var powerup = new GarbageGenerator();
         powerup.fill(tablero, 1, 1);
 
-        assert(tablero.getTablero() == tableroEsperado1 ||
-               tablero.getTablero() == tableroEsperado2 ||
-               tablero.getTablero() == tableroEsperado3 );
+        assert(tablero.getTablero().toString() == tableroEsperado1.toString() ||
+               tablero.getTablero().toString() == tableroEsperado2.toString() ||
+               tablero.getTablero().toString() == tableroEsperado3.toString() );
     },
 
     "Uneven layout with holes": function() {
@@ -201,9 +199,8 @@ buster.testCase("Power Up basura", {
         var powerup = new GarbageGenerator();
         powerup.fill(tablero, 1, 1);
 
-        assert(tablero.getTablero() == tableroEsperado1 ||
-               tablero.getTablero() == tableroEsperado2 ||
-               tablero.getTablero() == tableroEsperado3 );
+        assert(tablero.getTablero().toString() == tableroEsperado1.toString() ||
+               tablero.getTablero().toString() == tableroEsperado2.toString() ||
+               tablero.getTablero().toString() == tableroEsperado3.toString() );
     },
-    */
 });
